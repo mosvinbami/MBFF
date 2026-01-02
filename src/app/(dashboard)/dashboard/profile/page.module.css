@@ -1,0 +1,431 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-bottom: var(--space-8);
+}
+
+/* Profile Header */
+.profileHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--color-bg-card);
+    border-radius: var(--radius-xl);
+}
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    background: var(--color-accent-gradient);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.profileInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.username {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.teamName {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.editBtn {
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    text-decoration: none;
+}
+
+/* Stats Grid */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+}
+
+.statCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-3);
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+}
+
+.statValue {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-accent-primary);
+}
+
+.statLabel {
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+}
+
+/* Section */
+.section {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+}
+
+.sectionTitle {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    margin-bottom: var(--space-3);
+}
+
+/* Info List */
+.infoList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.infoItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.infoItem:last-child {
+    border-bottom: none;
+}
+
+.infoLabel {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+}
+
+.infoValue {
+    font-size: 0.8125rem;
+    font-weight: 600;
+}
+
+/* Empty Team */
+.emptyTeam {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-6);
+    text-align: center;
+    color: var(--color-text-muted);
+}
+
+.addPlayersBtn {
+    padding: var(--space-3) var(--space-6);
+    background: var(--color-accent-gradient);
+    border-radius: var(--radius-lg);
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* Team Group */
+.teamGroup {
+    margin-bottom: var(--space-4);
+}
+
+.teamGroup:last-child {
+    margin-bottom: 0;
+}
+
+.groupTitle {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2);
+}
+
+/* Player Grid */
+.playerGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.playerChip {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    font-size: 0.75rem;
+}
+
+.playerChip.bench {
+    opacity: 0.7;
+}
+
+.positionDot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+}
+
+.positionDot.gk {
+    background: var(--color-position-gk);
+}
+
+.positionDot.def {
+    background: var(--color-position-def);
+}
+
+.positionDot.mid {
+    background: var(--color-position-mid);
+}
+
+.positionDot.fwd {
+    background: var(--color-position-fwd);
+}
+
+.chipName {
+    font-weight: 500;
+}
+
+.captainTag,
+.vcTag {
+    width: 16px;
+    height: 16px;
+    background: gold;
+    color: #000;
+    border-radius: var(--radius-full);
+    font-size: 0.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vcTag {
+    background: silver;
+}
+
+/* View as Others */
+.viewAsOthers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+}
+
+/* Back Button (for public profile) */
+.backBtn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    font-size: 0.8125rem;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    width: fit-content;
+}
+
+/* Public Profile Header */
+.publicHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    background: var(--color-bg-card);
+    border-radius: var(--radius-xl);
+    text-align: center;
+}
+
+.publicAvatar {
+    width: 80px;
+    height: 80px;
+    background: var(--color-accent-gradient);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+}
+
+.publicUsername {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.publicTeamName {
+    font-size: 1rem;
+    color: var(--color-accent-primary);
+}
+
+.publicJoined {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+/* Pitch Display */
+.pitchDisplay {
+    background: linear-gradient(180deg, #1a472a 0%, #2d5a3e 30%, #1a472a 70%, #2d5a3e 100%);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+}
+
+.pitchRow {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+}
+
+.pitchRow:last-child {
+    margin-bottom: 0;
+}
+
+.pitchPlayer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.pitchShirt {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.625rem;
+    font-weight: 600;
+    position: relative;
+}
+
+.pitchShirt.gk {
+    background: var(--color-position-gk);
+    color: #000;
+}
+
+.pitchShirt.def {
+    background: var(--color-position-def);
+}
+
+.pitchShirt.mid {
+    background: var(--color-position-mid);
+}
+
+.pitchShirt.fwd {
+    background: var(--color-position-fwd);
+}
+
+.pitchShirtEmpty {
+    width: 40px;
+    height: 40px;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-lg);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.pitchName {
+    font-size: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    max-width: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pitchCaptainBadge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 14px;
+    height: 14px;
+    background: gold;
+    color: #000;
+    border-radius: var(--radius-full);
+    font-size: 0.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Bench Display */
+.benchDisplay {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    margin-top: var(--space-3);
+}
+
+.benchPlayer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.benchShirt {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.5rem;
+    font-weight: 600;
+}
+
+.benchShirt.gk {
+    background: var(--color-position-gk);
+    color: #000;
+}
+
+.benchShirt.def {
+    background: var(--color-position-def);
+}
+
+.benchShirt.mid {
+    background: var(--color-position-mid);
+}
+
+.benchShirt.fwd {
+    background: var(--color-position-fwd);
+}
+
+.benchName {
+    font-size: 0.5rem;
+    color: var(--color-text-muted);
+}

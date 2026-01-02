@@ -1,0 +1,443 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-bottom: var(--space-16);
+}
+
+/* Status Card */
+.statusCard {
+    background: var(--color-accent-gradient);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-5);
+    box-shadow: var(--shadow-glow);
+    position: relative;
+    overflow: hidden;
+}
+
+.statusCard::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(255, 255, 255, 0.1), transparent);
+    pointer-events: none;
+}
+
+.statusRow {
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    z-index: 1;
+}
+
+.statusItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.statusValue {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.statusLabel {
+    font-size: 0.75rem;
+    opacity: 0.9;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* League Status */
+.leagueStatus {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+}
+
+.sectionTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: var(--space-1);
+    color: var(--color-text-primary);
+}
+
+.requirement {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-4);
+}
+
+.leagueGrid {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.leagueChip {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-2);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+}
+
+.leagueChip.met {
+    border-color: var(--color-success);
+    background: rgba(16, 185, 129, 0.05);
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.1);
+}
+
+.leagueBadge {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.leagueChip[data-league="pl"] .leagueBadge {
+    background: var(--color-league-pl);
+}
+
+.leagueChip[data-league="ll"] .leagueBadge {
+    background: var(--color-league-ll);
+}
+
+.leagueChip[data-league="sa"] .leagueBadge {
+    background: var(--color-league-sa);
+}
+
+.leagueChip[data-league="bl"] .leagueBadge {
+    background: var(--color-league-bl);
+}
+
+.leagueChip[data-league="fl1"] .leagueBadge {
+    background: var(--color-league-fl1);
+}
+
+.leagueCount {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+}
+
+.leagueChip.met .leagueCount {
+    color: var(--color-success);
+}
+
+/* Position Section */
+.positionSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.positionGroup {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+}
+
+.positionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+}
+
+.positionInfo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.positionBadge {
+    padding: 2px 6px;
+    font-size: 0.625rem;
+    font-weight: 800;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.gk {
+    background: var(--color-position-gk);
+    color: #000;
+}
+
+.def {
+    background: var(--color-position-def);
+    color: #fff;
+}
+
+.mid {
+    background: var(--color-position-mid);
+    color: #fff;
+}
+
+.fwd {
+    background: var(--color-position-fwd);
+    color: #fff;
+}
+
+.positionLabel {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.positionCount {
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+}
+
+.positionCount.complete {
+    color: var(--color-success);
+}
+
+/* Player List */
+.playerList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.playerCard {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    border: 1px solid transparent;
+    transition: all var(--transition-fast);
+}
+
+.playerCard:active {
+    background: var(--color-bg-hover);
+    transform: scale(0.99);
+}
+
+.playerPhoto {
+    width: 40px;
+    height: 40px;
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+}
+
+.playerInfo {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.playerName {
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color-text-primary);
+}
+
+.playerTeam {
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+}
+
+.playerMeta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.playerPrice {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-accent-primary);
+}
+
+.leagueTag {
+    padding: 1px 4px;
+    font-size: 0.5rem;
+    font-weight: 700;
+    border-radius: 2px;
+    color: white;
+}
+
+.pl {
+    background: var(--color-league-pl);
+}
+
+.ll {
+    background: var(--color-league-ll);
+}
+
+.sa {
+    background: var(--color-league-sa);
+}
+
+.bl {
+    background: var(--color-league-bl);
+}
+
+.fl1 {
+    background: var(--color-league-fl1);
+}
+
+.removeBtn {
+    width: 28px;
+    height: 28px;
+    background: rgba(239, 68, 68, 0.1);
+    border: none;
+    border-radius: var(--radius-full);
+    color: var(--color-error);
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.removeBtn:active {
+    background: var(--color-error);
+    color: white;
+}
+
+/* Empty Slots */
+.emptySlots {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.emptySlot {
+    flex: 1;
+    height: 52px;
+    background: var(--color-bg-tertiary);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    font-size: 1.5rem;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.emptySlot:active {
+    background: var(--color-bg-hover);
+    border-color: var(--color-accent-primary);
+    color: var(--color-accent-primary);
+}
+
+/* FAB */
+.fab {
+    position: fixed;
+    bottom: calc(var(--bottom-nav-height) + var(--space-4) + var(--safe-area-bottom));
+    right: var(--space-4);
+    width: 60px;
+    height: 60px;
+    background: var(--color-accent-gradient);
+    border-radius: var(--radius-full);
+    color: white;
+    font-size: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-glow);
+    text-decoration: none;
+    z-index: 50;
+    transition: transform var(--transition-bounce);
+}
+
+.fab:active {
+    transform: scale(0.9);
+}
+
+/* Validation Card */
+.validationCard {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    font-size: 0.875rem;
+    text-decoration: none;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.validationCard:active {
+    background: var(--color-bg-hover);
+    border-color: var(--color-success);
+}
+
+.arrow {
+    margin-left: auto;
+    font-size: 1.25rem;
+    color: var(--color-success);
+}
+
+.validIcon {
+    width: 28px;
+    height: 28px;
+    background: var(--color-success);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+    color: white;
+}
+
+.invalidIcon {
+    width: 28px;
+    height: 28px;
+    background: var(--color-warning);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #000;
+    flex-shrink: 0;
+}

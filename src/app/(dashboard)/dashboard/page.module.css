@@ -1,0 +1,399 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-bottom: 80px;
+}
+
+/* 1. Deadline Card */
+.deadlineCard {
+    background: #111;
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    position: relative;
+    overflow: hidden;
+}
+
+.deadlineCard::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(250, 70, 0, 0.2) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.deadlineHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.deadlineLabel {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+}
+
+.deadlineDate {
+    color: var(--color-accent-primary);
+    font-weight: 600;
+}
+
+.deadlineContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.countdownBox {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2) var(--space-3);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.setLineupBtn {
+    background: var(--color-accent-gradient);
+    color: white;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-lg);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(250, 70, 0, 0.3);
+}
+
+/* 2. Hero Budget Card */
+.heroCard {
+    position: relative;
+    background: black;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    padding: var(--space-5);
+    border: 1px solid rgba(250, 70, 0, 0.3);
+    box-shadow: 0 0 20px rgba(250, 70, 0, 0.15);
+}
+
+.heroBackground {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 10% 100%, #FA4600 0%, transparent 50%),
+        radial-gradient(circle at 90% 20%, #FF6300 0%, transparent 40%);
+    opacity: 0.8;
+    filter: blur(20px);
+    z-index: 1;
+}
+
+.heroContent {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.budgetGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.heroLabel {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.heroValue {
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: white;
+}
+
+.playerCountBadge {
+    background: rgba(0, 0, 0, 0.4);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 80px;
+}
+
+.pcValue {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: white;
+}
+
+.pcLabel {
+    font-size: 0.625rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+}
+
+/* 3. Action Grid */
+.actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+}
+
+.actionTile {
+    background: #151515;
+    /* Dark card bg */
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tileGlow {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.actionTile:nth-child(2) .tileGlow {
+    background: radial-gradient(circle, rgba(250, 70, 0, 0.1) 0%, transparent 70%);
+}
+
+.iconBox {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.iconBlue {
+    background: rgba(59, 130, 246, 0.2);
+    color: #60A5FA;
+}
+
+.iconOrange {
+    background: rgba(250, 70, 0, 0.2);
+    color: #FA4600;
+}
+
+.iconYellow {
+    background: rgba(234, 179, 8, 0.2);
+    color: #FACC15;
+}
+
+.iconGold {
+    background: rgba(250, 204, 21, 0.1);
+    color: #FDE047;
+}
+
+.actionMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.actionTitle {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: white;
+}
+
+.actionHint {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+/* 4. Guidance Banner */
+.guidanceBanner {
+    background: linear-gradient(90deg, #1A1A1A 0%, #151515 100%);
+    border: 1px solid rgba(250, 70, 0, 0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3) var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    position: relative;
+    overflow: hidden;
+}
+
+.guidanceBanner::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #FA4600, transparent);
+    opacity: 0.5;
+}
+
+.shieldIcon {
+    width: 28px;
+    height: 28px;
+    border: 2px solid #FA4600;
+    border-radius: 50%;
+    /* Simplified shield as circle for now */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FA4600;
+    font-weight: 800;
+    font-size: 1rem;
+}
+
+.guidanceText {
+    flex: 1;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.875rem;
+}
+
+.guidanceArrow {
+    color: #FA4600;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+/* 5. League Strip */
+.leagueStrip {
+    display: flex;
+    gap: var(--space-3);
+    overflow-x: auto;
+    padding: var(--space-1);
+    margin: 0 -4px;
+    /* Hide scrollbar */
+    scrollbar-width: none;
+}
+
+.leagueStrip::-webkit-scrollbar {
+    display: none;
+}
+
+.leagueBadge {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    background: #151515;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    gap: 4px;
+}
+
+.leagueBadge.met {
+    border-color: var(--color-success);
+    color: var(--color-success);
+}
+
+.lbCode {
+    font-weight: 800;
+    font-size: 0.75rem;
+    color: inherit;
+}
+
+.lbStatus {
+    display: flex;
+}
+
+.dotMet {
+    width: 6px;
+    height: 6px;
+    background: var(--color-success);
+    border-radius: 50%;
+    box-shadow: 0 0 5px var(--color-success);
+}
+
+.dotMiss {
+    width: 6px;
+    height: 6px;
+    background: var(--color-text-muted);
+    border-radius: 50%;
+    opacity: 0.3;
+}
+
+/* Rules */
+.rulesSection {
+    background: #111;
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.rulesToggle {
+    width: 100%;
+    padding: var(--space-4);
+    display: flex;
+    justify-content: space-between;
+    background: transparent;
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+
+.chevron {
+    transition: transform 0.3s ease;
+}
+
+.chevron.open {
+    transform: rotate(180deg);
+}
+
+.rulesContent {
+    padding: 0 var(--space-4) var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.ruleItem {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+}
+
+.ruleNum {
+    width: 24px;
+    height: 24px;
+    background: rgba(250, 70, 0, 0.2);
+    color: #FA4600;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+}

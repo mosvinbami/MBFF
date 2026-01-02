@@ -1,0 +1,441 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-bottom: var(--space-8);
+}
+
+.backBtn {
+    align-self: flex-start;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+}
+
+.notFound {
+    text-align: center;
+    padding: var(--space-8);
+}
+
+.notFound a {
+    color: var(--color-accent-primary);
+}
+
+/* Player Header */
+.playerHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: var(--color-accent-gradient);
+    border-radius: var(--radius-xl);
+    color: white;
+}
+
+.playerPhoto {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+}
+
+.playerDetails {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.playerName {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.playerMeta {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.positionBadge {
+    padding: var(--space-1) var(--space-2);
+    font-size: 0.625rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+}
+
+.positionBadge.gk {
+    background: var(--color-position-gk);
+    color: #000;
+}
+
+.positionBadge.def {
+    background: var(--color-position-def);
+    color: #fff;
+}
+
+.positionBadge.mid {
+    background: var(--color-position-mid);
+    color: #fff;
+}
+
+.positionBadge.fwd {
+    background: var(--color-position-fwd);
+    color: #fff;
+}
+
+.leagueBadge {
+    padding: var(--space-1) var(--space-2);
+    font-size: 0.625rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    color: white;
+}
+
+.leagueBadge.pl {
+    background: var(--color-league-pl);
+}
+
+.leagueBadge.ll {
+    background: var(--color-league-ll);
+}
+
+.leagueBadge.sa {
+    background: var(--color-league-sa);
+}
+
+.leagueBadge.bl {
+    background: var(--color-league-bl);
+}
+
+.leagueBadge.fl1 {
+    background: var(--color-league-fl1);
+}
+
+.playerPrice {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.priceValue {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+/* Club Card */
+.clubCard {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: inherit;
+}
+
+.clubCard:active {
+    background: var(--color-bg-hover);
+}
+
+.clubLogo {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+}
+
+.clubInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.clubName {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.clubMeta {
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+}
+
+.arrow {
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+}
+
+/* Stats Grid */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+}
+
+.statCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: var(--space-3);
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+}
+
+.statValue {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-accent-primary);
+}
+
+.statLabel {
+    font-size: 0.625rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+}
+
+/* Section */
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.sectionTitle {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+/* Performance List */
+.performanceList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.performanceCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3);
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+}
+
+.perfMatch {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.perfDate {
+    font-size: 0.625rem;
+    color: var(--color-text-muted);
+}
+
+.perfOpponent {
+    font-size: 0.8125rem;
+    font-weight: 600;
+}
+
+.perfScore {
+    font-size: 0.6875rem;
+    color: var(--color-text-secondary);
+}
+
+.perfStats {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.perfStat {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+}
+
+.perfPoints {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-success);
+}
+
+.perfLabel {
+    font-size: 0.625rem;
+    color: var(--color-text-muted);
+}
+
+.perfBadge {
+    padding: 2px 6px;
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-sm);
+    font-size: 0.625rem;
+}
+
+.perfMinutes {
+    font-size: 0.625rem;
+    color: var(--color-text-muted);
+}
+
+/* Fixtures List */
+.fixturesList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.fixtureCard {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    border-left: 3px solid var(--color-accent-primary);
+}
+
+.fixtureDate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 50px;
+}
+
+.dateText {
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.timeText {
+    font-size: 0.625rem;
+    color: var(--color-text-muted);
+}
+
+.fixtureMatch {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.venue {
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+}
+
+.opponent {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.gwBadge {
+    padding: var(--space-1) var(--space-2);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-sm);
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+/* Add Button */
+.addButton {
+    width: 100%;
+    padding: var(--space-4);
+    background: var(--color-accent-gradient);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+}
+
+.addButton:active {
+    opacity: 0.9;
+    transform: scale(0.99);
+}
+
+/* Empty State */
+.empty {
+    text-align: center;
+    padding: var(--space-4);
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+}
+
+/* Loading State */
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.spinner {
+    font-size: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Info Grid */
+.infoGrid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+}
+
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.infoRow:last-child {
+    border-bottom: none;
+}
+
+.infoLabel {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+}
+
+.infoValue {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}

@@ -1,0 +1,368 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-bottom: var(--space-12);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-2) 0;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* View Toggle */
+.viewToggle {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border);
+}
+
+.toggleBtn {
+    flex: 1;
+    padding: var(--space-2) var(--space-4);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.toggleBtn.active {
+    background: var(--color-bg-card);
+    color: var(--color-text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+/* League Filter */
+.leagueFilter {
+    display: flex;
+    gap: var(--space-2);
+    overflow-x: auto;
+    padding: var(--space-1);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    mask-image: linear-gradient(to right, black 90%, transparent 100%);
+}
+
+.leagueFilter::-webkit-scrollbar {
+    display: none;
+}
+
+.leagueBtn {
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.leagueBtn.active {
+    background: var(--color-bg-card);
+    border-color: var(--color-border-highlight);
+    color: var(--color-text-primary);
+    box-shadow: var(--shadow-glow);
+}
+
+/* Status Filter */
+.statusFilter {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.statusBtn {
+    flex: 1;
+    padding: var(--space-3);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+}
+
+.statusBtn.active {
+    background: var(--color-bg-card);
+    border-color: var(--color-border-highlight);
+    color: var(--color-text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.liveBtn.active {
+    border-color: var(--color-error);
+    color: var(--color-error);
+    background: rgba(239, 68, 68, 0.05);
+}
+
+/* Fixtures List */
+.fixturesList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.dateGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.dateHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    position: sticky;
+    top: calc(var(--safe-area-top) + 60px);
+    z-index: 20;
+}
+
+.dateText {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.dateCount {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    background: var(--color-bg-tertiary);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+}
+
+/* Fixture Card - Ticket Style */
+.fixtureCard {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 0;
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform var(--transition-bounce);
+    /* Ticket perforation effect */
+    background-image: radial-gradient(circle at 0 50%, transparent 8px, var(--color-bg-card) 9px),
+        radial-gradient(circle at 100% 50%, transparent 8px, var(--color-bg-card) 9px);
+    background-size: 51% 100%;
+    background-position: 0 0, 100% 0;
+    background-repeat: no-repeat;
+    mask-image: radial-gradient(circle at 0 50%, transparent 8px, black 9px),
+        radial-gradient(circle at 100% 50%, transparent 8px, black 9px);
+    mask-size: 100% 100%;
+    mask-position: 0 0, 100% 0;
+    mask-composite: intersect;
+}
+
+.fixtureCard::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    bottom: 10%;
+    left: 70px;
+    border-left: 2px dashed var(--color-border);
+}
+
+.fixtureCard:active {
+    transform: scale(0.98);
+}
+
+.fixtureTime {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 70px;
+    padding: var(--space-3) 0;
+    flex-shrink: 0;
+}
+
+.time {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.fixtureTeams {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-3) var(--space-3) var(--space-2);
+}
+
+.teamRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--color-text-primary);
+}
+
+.teamName {
+    font-size: 0.9375rem;
+    font-weight: 500;
+}
+
+.score {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 700;
+    width: 24px;
+    text-align: center;
+    color: var(--color-text-primary);
+}
+
+.liveScore {
+    color: var(--color-error);
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+}
+
+.statusBadge {
+    padding: 2px 6px;
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-sm);
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+}
+
+.liveIndicator {
+    padding: 2px 6px;
+    background: var(--color-error);
+    border-radius: var(--radius-sm);
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: white;
+    animation: flash 1.5s infinite;
+}
+
+@keyframes flash {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.gwBadge {
+    font-size: 0.625rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Empty State */
+.empty {
+    text-align: center;
+    padding: var(--space-8);
+    background: var(--color-bg-card);
+    border-radius: var(--radius-xl);
+    border: 1px dashed var(--color-border);
+}
+
+.empty p {
+    color: var(--color-text-muted);
+}
+
+/* Clubs List styling - reusing similar patterns */
+.clubsList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.clubCard {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid transparent;
+    transition: all var(--transition-base);
+}
+
+.clubCard:active {
+    background: var(--color-bg-hover);
+    transform: scale(0.99);
+}
+
+.clubLogo {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+}
+
+.clubName {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+}
+
+.arrow {
+    color: var(--color-text-muted);
+    font-size: 1.25rem;
+}
+
+/* Loading */
+.loading {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-8);
+}
+
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--color-bg-tertiary);
+    border-top-color: var(--color-accent-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -1,0 +1,312 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+/* Gameweek Selector */
+.gwSelector {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.gwArrow {
+    width: 36px;
+    height: 36px;
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    color: var(--color-text-muted);
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.gwList {
+    display: flex;
+    gap: var(--space-1);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex: 1;
+}
+
+.gwList::-webkit-scrollbar {
+    display: none;
+}
+
+.gwItem {
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.gwItem.active {
+    background: var(--color-accent-gradient);
+    border-color: transparent;
+    color: white;
+}
+
+/* Summary Card */
+.summaryCard {
+    display: flex;
+    align-items: center;
+    padding: var(--space-5);
+    background: var(--color-accent-gradient);
+    border-radius: var(--radius-xl);
+}
+
+.summaryMain {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.summaryValue {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.summaryLabel {
+    font-size: 0.75rem;
+    opacity: 0.85;
+    margin-top: var(--space-1);
+}
+
+.summaryDivider {
+    width: 1px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.3);
+    margin: 0 var(--space-4);
+}
+
+.summarySecondary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.totalValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.totalLabel {
+    font-size: 0.625rem;
+    opacity: 0.75;
+}
+
+/* Section Title */
+.sectionTitle {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    margin-bottom: var(--space-3);
+}
+
+/* Breakdown */
+.breakdown {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-6);
+    text-align: center;
+}
+
+.emptyIcon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-2);
+}
+
+.emptyState p {
+    font-weight: 600;
+    margin-bottom: var(--space-1);
+}
+
+.emptyHint {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+/* Player Accordion */
+.playerList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.playerAccordion {
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.playerSummary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3);
+    cursor: pointer;
+    list-style: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.playerSummary::-webkit-details-marker {
+    display: none;
+}
+
+.playerInfo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.badge {
+    padding: 2px 6px;
+    font-size: 0.5625rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+}
+
+.gk {
+    background: var(--color-position-gk);
+    color: #000;
+}
+
+.def {
+    background: var(--color-position-def);
+    color: #fff;
+}
+
+.mid {
+    background: var(--color-position-mid);
+    color: #fff;
+}
+
+.fwd {
+    background: var(--color-position-fwd);
+    color: #fff;
+}
+
+.playerName {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.captainBadge {
+    width: 18px;
+    height: 18px;
+    background: gold;
+    color: #000;
+    border-radius: var(--radius-full);
+    font-size: 0.625rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.playerPoints {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-success);
+}
+
+.matchBreakdown {
+    padding: 0 var(--space-3) var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.matchItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+}
+
+.matchInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.opponent {
+    font-weight: 500;
+}
+
+.competition {
+    font-size: 0.625rem;
+    color: var(--color-text-muted);
+}
+
+.matchStats {
+    display: flex;
+    gap: var(--space-2);
+    color: var(--color-text-muted);
+}
+
+.matchPoints {
+    font-weight: 600;
+    color: var(--color-success);
+}
+
+/* Scoring Guide */
+.guide {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+}
+
+.guideGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+}
+
+.guideItem {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-2);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+}
+
+.guideAction {
+    color: var(--color-text-secondary);
+}
+
+.guidePoints {
+    font-weight: 700;
+    color: var(--color-success);
+}
+
+.guidePointsNeg {
+    font-weight: 700;
+    color: var(--color-error);
+}

@@ -1,0 +1,349 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-bottom: var(--space-8);
+}
+
+.backBtn {
+    align-self: flex-start;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+}
+
+.notFound {
+    text-align: center;
+    padding: var(--space-8);
+}
+
+.notFound a {
+    color: var(--color-accent-primary);
+}
+
+/* Club Header */
+.clubHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: var(--color-accent-gradient);
+    border-radius: var(--radius-xl);
+    color: white;
+}
+
+.clubLogo {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-lg);
+}
+
+.clubDetails {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.clubName {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.leagueBadge {
+    display: inline-block;
+    padding: var(--space-1) var(--space-2);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    color: white;
+    width: fit-content;
+}
+
+.leagueBadge.pl {
+    background: var(--color-league-pl);
+}
+
+.leagueBadge.ll {
+    background: var(--color-league-ll);
+}
+
+.leagueBadge.sa {
+    background: var(--color-league-sa);
+}
+
+.leagueBadge.bl {
+    background: var(--color-league-bl);
+}
+
+.leagueBadge.fl1 {
+    background: var(--color-league-fl1);
+}
+
+/* Info Grid */
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+}
+
+.infoItem {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--space-3);
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.infoLabel {
+    font-size: 0.625rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+}
+
+.infoValue {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+/* Section */
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.sectionTitle {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+/* Fixtures List */
+.fixturesList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.fixtureCard {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    border-left: 3px solid var(--color-accent-primary);
+}
+
+.fixtureDate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 50px;
+}
+
+.dateText {
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.timeText {
+    font-size: 0.625rem;
+    color: var(--color-text-muted);
+}
+
+.fixtureMatch {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.venue {
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+}
+
+.opponent {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.gwBadge {
+    padding: var(--space-1) var(--space-2);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-sm);
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+/* Results */
+.resultsList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.resultCard {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    border-left: 3px solid var(--color-text-muted);
+}
+
+.resultCard.win {
+    border-left-color: var(--color-success);
+}
+
+.resultCard.loss {
+    border-left-color: var(--color-error);
+}
+
+.resultCard.draw {
+    border-left-color: var(--color-warning);
+}
+
+.resultDate {
+    min-width: 50px;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+.resultMatch {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.resultScore {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.scoreDivider {
+    color: var(--color-text-muted);
+}
+
+/* Player Grid */
+.playerGrid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.playerCard {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: inherit;
+}
+
+.playerCard:active {
+    background: var(--color-bg-hover);
+}
+
+.playerPhoto {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    background: var(--color-accent-gradient);
+    border-radius: var(--radius-full);
+    color: white;
+}
+
+.playerInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.playerName {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.positionBadge {
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 0.5rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    width: fit-content;
+}
+
+.positionBadge.gk {
+    background: var(--color-position-gk);
+    color: #000;
+}
+
+.positionBadge.def {
+    background: var(--color-position-def);
+    color: #fff;
+}
+
+.positionBadge.mid {
+    background: var(--color-position-mid);
+    color: #fff;
+}
+
+.positionBadge.fwd {
+    background: var(--color-position-fwd);
+    color: #fff;
+}
+
+.playerStats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.playerPoints {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-success);
+}
+
+.playerPrice {
+    font-size: 0.6875rem;
+    color: var(--color-accent-primary);
+}
+
+/* Empty State */
+.empty {
+    text-align: center;
+    padding: var(--space-4);
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+}
