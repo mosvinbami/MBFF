@@ -2,60 +2,79 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
-    padding-bottom: var(--space-12);
+    padding-bottom: var(--space-8);
 }
 
 .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-2) 0;
 }
 
 .title {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 700;
-    letter-spacing: -0.5px;
+}
+
+.liveBadge {
+    padding: var(--space-1) var(--space-2);
+    background: var(--color-error);
+    border-radius: var(--radius-full);
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
 }
 
 /* View Toggle */
 .viewToggle {
     display: flex;
-    gap: 4px;
-    padding: 4px;
-    background: var(--color-bg-tertiary);
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--color-border);
+    gap: var(--space-2);
+    padding: var(--space-2);
+    background: rgba(30, 30, 35, 0.3);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .toggleBtn {
     flex: 1;
-    padding: var(--space-2) var(--space-4);
+    padding: var(--space-3);
     background: transparent;
     border: none;
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--color-text-muted);
     cursor: pointer;
-    transition: all var(--transition-base);
 }
 
 .toggleBtn.active {
-    background: var(--color-bg-card);
-    color: var(--color-text-primary);
-    box-shadow: var(--shadow-sm);
+    background: var(--color-accent-gradient);
+    color: white;
 }
 
 /* League Filter */
 .leagueFilter {
     display: flex;
-    gap: var(--space-2);
+    gap: var(--space-1);
     overflow-x: auto;
     padding: var(--space-1);
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    mask-image: linear-gradient(to right, black 90%, transparent 100%);
 }
 
 .leagueFilter::-webkit-scrollbar {
@@ -63,23 +82,21 @@
 }
 
 .leagueBtn {
-    padding: var(--space-2) var(--space-4);
+    padding: var(--space-2) var(--space-3);
     background: var(--color-bg-tertiary);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-full);
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
     font-weight: 600;
     color: var(--color-text-secondary);
     white-space: nowrap;
     cursor: pointer;
-    transition: all var(--transition-base);
 }
 
 .leagueBtn.active {
-    background: var(--color-bg-card);
-    border-color: var(--color-border-highlight);
-    color: var(--color-text-primary);
-    box-shadow: var(--shadow-glow);
+    background: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+    color: white;
 }
 
 /* Status Filter */
@@ -90,32 +107,23 @@
 
 .statusBtn {
     flex: 1;
-    padding: var(--space-3);
-    background: var(--color-bg-tertiary);
-    border: 1px solid var(--color-border);
+    padding: var(--space-2) var(--space-3);
+    background: rgba(30, 30, 35, 0.25);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.04);
     border-radius: var(--radius-lg);
-    font-size: 0.8125rem;
-    font-weight: 600;
+    font-size: 0.75rem;
+    font-weight: 500;
     color: var(--color-text-muted);
     cursor: pointer;
-    transition: all var(--transition-base);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
+    transition: all var(--transition-fast);
 }
 
 .statusBtn.active {
-    background: var(--color-bg-card);
-    border-color: var(--color-border-highlight);
+    background: rgba(255, 107, 0, 0.1);
+    border-color: rgba(255, 107, 0, 0.3);
     color: var(--color-text-primary);
-    box-shadow: var(--shadow-sm);
-}
-
-.liveBtn.active {
-    border-color: var(--color-error);
-    color: var(--color-error);
-    background: rgba(239, 68, 68, 0.05);
 }
 
 /* Fixtures List */
@@ -128,147 +136,75 @@
 .dateGroup {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
+    gap: var(--space-2);
 }
 
 .dateHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--space-3) var(--space-4);
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--color-border);
-    position: sticky;
-    top: calc(var(--safe-area-top) + 60px);
-    z-index: 20;
+    padding: var(--space-2) 0;
 }
 
 .dateText {
     font-size: 0.875rem;
-    font-weight: 700;
-    color: var(--color-text-primary);
+    font-weight: 600;
+    color: var(--color-accent-primary);
 }
 
 .dateCount {
-    font-size: 0.75rem;
+    font-size: 0.6875rem;
     color: var(--color-text-muted);
-    background: var(--color-bg-tertiary);
-    padding: 2px 8px;
-    border-radius: var(--radius-full);
 }
 
-/* Fixture Card - Ticket Style */
+/* Fixture Card */
 .fixtureCard {
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    padding: 0;
-    background: var(--color-bg-card);
+    padding: var(--space-3) var(--space-4);
+    background: rgba(30, 30, 35, 0.25);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
     border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-left: 1px solid rgba(255, 107, 0, 0.1);
+    text-decoration: none;
+    color: inherit;
     position: relative;
     overflow: hidden;
-    text-decoration: none;
-    transition: transform var(--transition-bounce);
-    /* Ticket perforation effect */
-    background-image: radial-gradient(circle at 0 50%, transparent 8px, var(--color-bg-card) 9px),
-        radial-gradient(circle at 100% 50%, transparent 8px, var(--color-bg-card) 9px);
-    background-size: 51% 100%;
-    background-position: 0 0, 100% 0;
-    background-repeat: no-repeat;
-    mask-image: radial-gradient(circle at 0 50%, transparent 8px, black 9px),
-        radial-gradient(circle at 100% 50%, transparent 8px, black 9px);
-    mask-size: 100% 100%;
-    mask-position: 0 0, 100% 0;
-    mask-composite: intersect;
+    transition: all var(--transition-fast);
 }
 
 .fixtureCard::before {
     content: '';
     position: absolute;
-    top: 10%;
-    bottom: 10%;
-    left: 70px;
-    border-left: 2px dashed var(--color-border);
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    background: linear-gradient(90deg, rgba(255, 107, 0, 0.03) 0%, transparent 100%);
+    pointer-events: none;
 }
 
 .fixtureCard:active {
-    transform: scale(0.98);
+    background: var(--color-bg-hover);
 }
 
-.fixtureTime {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    width: 70px;
-    padding: var(--space-3) 0;
-    flex-shrink: 0;
+.fixtureCard.completed {
+    border-left: 1px solid rgba(16, 185, 129, 0.15);
 }
 
-.time {
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--color-text-primary);
+.fixtureCard.upcoming {
+    border-left: 1px solid rgba(255, 107, 0, 0.08);
 }
 
-.fixtureTeams {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    padding: var(--space-3) var(--space-3) var(--space-3) var(--space-2);
+.fixtureCard.live {
+    border-left: 1px solid rgba(239, 68, 68, 0.2);
+    animation: pulse 2s infinite;
 }
 
-.teamRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--color-text-primary);
-}
-
-.teamName {
-    font-size: 0.9375rem;
-    font-weight: 500;
-}
-
-.score {
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    font-weight: 700;
-    width: 24px;
-    text-align: center;
-    color: var(--color-text-primary);
-}
-
-.liveScore {
-    color: var(--color-error);
-    text-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
-}
-
-.statusBadge {
-    padding: 2px 6px;
-    background: var(--color-bg-tertiary);
-    border-radius: var(--radius-sm);
-    font-size: 0.625rem;
-    font-weight: 700;
-    color: var(--color-text-muted);
-}
-
-.liveIndicator {
-    padding: 2px 6px;
-    background: var(--color-error);
-    border-radius: var(--radius-sm);
-    font-size: 0.625rem;
-    font-weight: 700;
-    color: white;
-    animation: flash 1.5s infinite;
-}
-
-@keyframes flash {
+@keyframes pulse {
 
     0%,
     100% {
@@ -276,31 +212,96 @@
     }
 
     50% {
-        opacity: 0.5;
+        opacity: 0.85;
     }
 }
 
-.gwBadge {
-    font-size: 0.625rem;
-    color: var(--color-text-muted);
+.fixtureTime {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 48px;
+}
+
+.time {
+    font-size: 0.75rem;
     font-weight: 600;
-    text-transform: uppercase;
+    color: var(--color-text-secondary);
 }
 
-/* Empty State */
-.empty {
+.leagueBadge {
+    padding: 2px 4px;
+    font-size: 0.5rem;
+    font-weight: 700;
+    border-radius: 2px;
+    color: white;
+}
+
+.leagueBadge.pl {
+    background: var(--color-league-pl);
+}
+
+.leagueBadge.ll {
+    background: var(--color-league-ll);
+}
+
+.leagueBadge.sa {
+    background: var(--color-league-sa);
+}
+
+.leagueBadge.bl {
+    background: var(--color-league-bl);
+}
+
+.leagueBadge.fl1 {
+    background: var(--color-league-fl1);
+}
+
+.fixtureTeams {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.teamRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+.teamRow:active {
+    opacity: 0.7;
+}
+
+.teamName {
+    font-size: 0.8125rem;
+    font-weight: 500;
+}
+
+.score {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    min-width: 20px;
     text-align: center;
-    padding: var(--space-8);
-    background: var(--color-bg-card);
-    border-radius: var(--radius-xl);
-    border: 1px dashed var(--color-border);
+    color: var(--color-accent-primary);
 }
 
-.empty p {
-    color: var(--color-text-muted);
+.statusBadge {
+    padding: var(--space-1) var(--space-2);
+    background: var(--color-success);
+    border-radius: var(--radius-full);
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: white;
+    min-width: 28px;
+    text-align: center;
 }
 
-/* Clubs List styling - reusing similar patterns */
+/* Clubs List */
 .clubsList {
     display: flex;
     flex-direction: column;
@@ -314,18 +315,17 @@
     padding: var(--space-3);
     background: var(--color-bg-card);
     border-radius: var(--radius-lg);
-    border: 1px solid transparent;
-    transition: all var(--transition-base);
+    text-decoration: none;
+    color: inherit;
 }
 
 .clubCard:active {
     background: var(--color-bg-hover);
-    transform: scale(0.99);
 }
 
 .clubLogo {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -334,35 +334,152 @@
     border-radius: var(--radius-lg);
 }
 
+.clubInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
 .clubName {
+    font-size: 0.875rem;
     font-weight: 600;
-    font-size: 1rem;
-    color: var(--color-text-primary);
+}
+
+.clubMeta {
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .arrow {
-    color: var(--color-text-muted);
     font-size: 1.25rem;
+    color: var(--color-text-muted);
 }
 
-/* Loading */
+/* Empty State */
+.empty {
+    text-align: center;
+    padding: var(--space-8);
+    color: var(--color-text-muted);
+}
+
+/* Live Indicator */
+.liveIndicator {
+    padding: var(--space-1) var(--space-2);
+    background: var(--color-error);
+    border-radius: var(--radius-sm);
+    font-size: 0.5rem;
+    font-weight: 700;
+    color: white;
+    animation: pulse 1s infinite;
+}
+
+.liveScore {
+    color: var(--color-error);
+}
+
+.liveBtn {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: var(--color-error);
+    color: var(--color-error);
+}
+
+.gwBadge {
+    padding: 2px 6px;
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-sm);
+    font-size: 0.5rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.clubCount {
+    margin-left: var(--space-1);
+    font-size: 0.625rem;
+    opacity: 0.7;
+}
+
+.clubsHeader {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    padding: var(--space-2) 0;
+}
+
+/* Loading State */
 .loading {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
     padding: var(--space-8);
+    color: var(--color-text-muted);
 }
 
 .spinner {
-    width: 32px;
-    height: 32px;
-    border: 3px solid var(--color-bg-tertiary);
-    border-top-color: var(--color-accent-primary);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+    font-size: 2rem;
+    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
     to {
         transform: rotate(360deg);
     }
+}
+
+/* Error State */
+.error {
+    text-align: center;
+    padding: var(--space-6);
+    color: var(--color-error);
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: var(--radius-lg);
+}
+
+/* No Data State */
+.noData {
+    text-align: center;
+    padding: var(--space-8);
+    color: var(--color-text-secondary);
+}
+
+.hint {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-2);
+}
+
+/* Cup Header */
+.cupHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 107, 0, 0.1) 100%);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-2);
+}
+
+.cupTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.cupStats {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+.round {
+    font-size: 0.625rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
 }

@@ -1,0 +1,228 @@
+// Ligue 1 Players - Real player data for fantasy football
+// Accurate squad data for the 2025/26 season
+
+import { Player, LeagueCode } from '@/contexts/SquadContext';
+
+export const LIGUE1_PLAYERS: Player[] = [
+    // PSG
+    { id: 'fl1-1', name: 'Gianluigi Donnarumma', team: 'PSG', position: 'GK', price: 5.5, points: 85, league: 'FL1' as LeagueCode },
+    { id: 'fl1-2', name: 'Matvey Safonov', team: 'PSG', position: 'GK', price: 4.5, points: 42, league: 'FL1' as LeagueCode },
+    { id: 'fl1-3', name: 'Marquinhos', team: 'PSG', position: 'DEF', price: 5.5, points: 75, league: 'FL1' as LeagueCode },
+    { id: 'fl1-4', name: 'Lucas Hernández', team: 'PSG', position: 'DEF', price: 5.5, points: 42, league: 'FL1' as LeagueCode },
+    { id: 'fl1-5', name: 'Presnel Kimpembe', team: 'PSG', position: 'DEF', price: 5.0, points: 35, league: 'FL1' as LeagueCode },
+    { id: 'fl1-6', name: 'Willian Pacho', team: 'PSG', position: 'DEF', price: 5.0, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-7', name: 'Achraf Hakimi', team: 'PSG', position: 'DEF', price: 6.5, points: 95, league: 'FL1' as LeagueCode },
+    { id: 'fl1-8', name: 'Nuno Mendes', team: 'PSG', position: 'DEF', price: 6.0, points: 82, league: 'FL1' as LeagueCode },
+    { id: 'fl1-9', name: 'Vitinha', team: 'PSG', position: 'MID', price: 7.0, points: 88, league: 'FL1' as LeagueCode },
+    { id: 'fl1-10', name: 'Warren Zaïre-Emery', team: 'PSG', position: 'MID', price: 6.5, points: 78, league: 'FL1' as LeagueCode },
+    { id: 'fl1-11', name: 'Fabian Ruiz', team: 'PSG', position: 'MID', price: 6.0, points: 72, league: 'FL1' as LeagueCode },
+    { id: 'fl1-12', name: 'João Neves', team: 'PSG', position: 'MID', price: 6.5, points: 75, league: 'FL1' as LeagueCode },
+    { id: 'fl1-13', name: 'Lee Kang-in', team: 'PSG', position: 'MID', price: 7.0, points: 85, league: 'FL1' as LeagueCode },
+    { id: 'fl1-14', name: 'Ousmane Dembélé', team: 'PSG', position: 'FWD', price: 9.5, points: 125, league: 'FL1' as LeagueCode },
+    { id: 'fl1-15', name: 'Bradley Barcola', team: 'PSG', position: 'FWD', price: 8.5, points: 108, league: 'FL1' as LeagueCode },
+    { id: 'fl1-16', name: 'Gonçalo Ramos', team: 'PSG', position: 'FWD', price: 8.0, points: 88, league: 'FL1' as LeagueCode },
+    { id: 'fl1-17', name: 'Randal Kolo Muani', team: 'PSG', position: 'FWD', price: 7.5, points: 72, league: 'FL1' as LeagueCode },
+    { id: 'fl1-18', name: 'Marco Asensio', team: 'PSG', position: 'FWD', price: 7.0, points: 68, league: 'FL1' as LeagueCode },
+
+    // Monaco
+    { id: 'fl1-19', name: 'Radosław Majecki', team: 'Monaco', position: 'GK', price: 5.0, points: 82, league: 'FL1' as LeagueCode },
+    { id: 'fl1-20', name: 'Philipp Köhn', team: 'Monaco', position: 'GK', price: 4.0, points: 28, league: 'FL1' as LeagueCode },
+    { id: 'fl1-21', name: 'Thilo Kehrer', team: 'Monaco', position: 'DEF', price: 5.0, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-22', name: 'Wilfried Singo', team: 'Monaco', position: 'DEF', price: 5.5, points: 75, league: 'FL1' as LeagueCode },
+    { id: 'fl1-23', name: 'Vanderson', team: 'Monaco', position: 'DEF', price: 5.5, points: 78, league: 'FL1' as LeagueCode },
+    { id: 'fl1-24', name: 'Aleksandr Golovin', team: 'Monaco', position: 'MID', price: 6.5, points: 85, league: 'FL1' as LeagueCode },
+    { id: 'fl1-25', name: 'Youssouf Fofana', team: 'Monaco', position: 'MID', price: 5.5, points: 35, league: 'FL1' as LeagueCode },
+    { id: 'fl1-26', name: 'Denis Zakaria', team: 'Monaco', position: 'MID', price: 5.5, points: 62, league: 'FL1' as LeagueCode },
+    { id: 'fl1-27', name: 'Maghnes Akliouche', team: 'Monaco', position: 'MID', price: 6.5, points: 78, league: 'FL1' as LeagueCode },
+    { id: 'fl1-28', name: 'Takumi Minamino', team: 'Monaco', position: 'MID', price: 6.0, points: 72, league: 'FL1' as LeagueCode },
+    { id: 'fl1-29', name: 'Wissam Ben Yedder', team: 'Monaco', position: 'FWD', price: 7.0, points: 45, league: 'FL1' as LeagueCode },
+    { id: 'fl1-30', name: 'Breel Embolo', team: 'Monaco', position: 'FWD', price: 7.0, points: 78, league: 'FL1' as LeagueCode },
+    { id: 'fl1-31', name: 'Folarin Balogun', team: 'Monaco', position: 'FWD', price: 7.5, points: 88, league: 'FL1' as LeagueCode },
+    { id: 'fl1-32', name: 'Eliesse Ben Seghir', team: 'Monaco', position: 'FWD', price: 6.0, points: 68, league: 'FL1' as LeagueCode },
+
+    // Marseille
+    { id: 'fl1-33', name: 'Geronimo Rulli', team: 'Marseille', position: 'GK', price: 5.0, points: 78, league: 'FL1' as LeagueCode },
+    { id: 'fl1-34', name: 'Jeffrey de Lange', team: 'Marseille', position: 'GK', price: 4.0, points: 25, league: 'FL1' as LeagueCode },
+    { id: 'fl1-35', name: 'Leonardo Balerdi', team: 'Marseille', position: 'DEF', price: 5.0, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-36', name: 'Derek Cornelius', team: 'Marseille', position: 'DEF', price: 5.0, points: 65, league: 'FL1' as LeagueCode },
+    { id: 'fl1-37', name: 'Amir Murillo', team: 'Marseille', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-38', name: 'Quentin Merlin', team: 'Marseille', position: 'DEF', price: 5.0, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-39', name: 'Ulisses Garcia', team: 'Marseille', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-40', name: 'Pierre-Emile Højbjerg', team: 'Marseille', position: 'MID', price: 6.0, points: 75, league: 'FL1' as LeagueCode },
+    { id: 'fl1-41', name: 'Valentin Rongier', team: 'Marseille', position: 'MID', price: 5.5, points: 62, league: 'FL1' as LeagueCode },
+    { id: 'fl1-42', name: 'Adrien Rabiot', team: 'Marseille', position: 'MID', price: 6.5, points: 78, league: 'FL1' as LeagueCode },
+    { id: 'fl1-43', name: 'Luis Henrique', team: 'Marseille', position: 'MID', price: 5.5, points: 65, league: 'FL1' as LeagueCode },
+    { id: 'fl1-44', name: 'Amine Harit', team: 'Marseille', position: 'MID', price: 6.0, points: 72, league: 'FL1' as LeagueCode },
+    { id: 'fl1-45', name: 'Greenwood', team: 'Marseille', position: 'FWD', price: 9.0, points: 115, league: 'FL1' as LeagueCode },
+    { id: 'fl1-46', name: 'Neal Maupay', team: 'Marseille', position: 'FWD', price: 7.0, points: 82, league: 'FL1' as LeagueCode },
+    { id: 'fl1-47', name: 'Elye Wahi', team: 'Marseille', position: 'FWD', price: 7.5, points: 78, league: 'FL1' as LeagueCode },
+
+    // Lyon
+    { id: 'fl1-48', name: 'Lucas Perri', team: 'Lyon', position: 'GK', price: 5.0, points: 75, league: 'FL1' as LeagueCode },
+    { id: 'fl1-49', name: 'Rémy Descamps', team: 'Lyon', position: 'GK', price: 4.0, points: 25, league: 'FL1' as LeagueCode },
+    { id: 'fl1-50', name: 'Duje Ćaleta-Car', team: 'Lyon', position: 'DEF', price: 5.0, points: 62, league: 'FL1' as LeagueCode },
+    { id: 'fl1-51', name: 'Moussa Niakhaté', team: 'Lyon', position: 'DEF', price: 5.0, points: 65, league: 'FL1' as LeagueCode },
+    { id: 'fl1-52', name: 'Ainsley Maitland-Niles', team: 'Lyon', position: 'DEF', price: 4.5, points: 52, league: 'FL1' as LeagueCode },
+    { id: 'fl1-53', name: 'Corentin Tolisso', team: 'Lyon', position: 'MID', price: 5.5, points: 62, league: 'FL1' as LeagueCode },
+    { id: 'fl1-54', name: 'Maxence Caqueret', team: 'Lyon', position: 'MID', price: 5.5, points: 65, league: 'FL1' as LeagueCode },
+    { id: 'fl1-55', name: 'Nemanja Matić', team: 'Lyon', position: 'MID', price: 5.0, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-56', name: 'Rayan Cherki', team: 'Lyon', position: 'MID', price: 7.5, points: 92, league: 'FL1' as LeagueCode },
+    { id: 'fl1-57', name: 'Malick Fofana', team: 'Lyon', position: 'MID', price: 6.0, points: 72, league: 'FL1' as LeagueCode },
+    { id: 'fl1-58', name: 'Alexandre Lacazette', team: 'Lyon', position: 'FWD', price: 8.0, points: 98, league: 'FL1' as LeagueCode },
+    { id: 'fl1-59', name: 'Georges Mikautadze', team: 'Lyon', position: 'FWD', price: 7.5, points: 85, league: 'FL1' as LeagueCode },
+    { id: 'fl1-60', name: 'Ernest Nuamah', team: 'Lyon', position: 'FWD', price: 6.0, points: 62, league: 'FL1' as LeagueCode },
+
+    // Lille
+    { id: 'fl1-61', name: 'Lucas Chevalier', team: 'Lille', position: 'GK', price: 5.0, points: 82, league: 'FL1' as LeagueCode },
+    { id: 'fl1-62', name: 'Bafodé Diakité', team: 'Lille', position: 'DEF', price: 5.0, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-63', name: 'Aïssa Mandi', team: 'Lille', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-64', name: 'Tiago Santos', team: 'Lille', position: 'DEF', price: 5.5, points: 78, league: 'FL1' as LeagueCode },
+    { id: 'fl1-65', name: 'Gabriel Gudmundsson', team: 'Lille', position: 'DEF', price: 5.0, points: 62, league: 'FL1' as LeagueCode },
+    { id: 'fl1-66', name: 'Benjamin André', team: 'Lille', position: 'MID', price: 5.5, points: 65, league: 'FL1' as LeagueCode },
+    { id: 'fl1-67', name: 'Angel Gomes', team: 'Lille', position: 'MID', price: 6.0, points: 75, league: 'FL1' as LeagueCode },
+    { id: 'fl1-68', name: 'André Gomes', team: 'Lille', position: 'MID', price: 5.0, points: 52, league: 'FL1' as LeagueCode },
+    { id: 'fl1-69', name: 'Rémy Cabella', team: 'Lille', position: 'MID', price: 5.5, points: 62, league: 'FL1' as LeagueCode },
+    { id: 'fl1-70', name: 'Edon Zhegrova', team: 'Lille', position: 'FWD', price: 7.5, points: 92, league: 'FL1' as LeagueCode },
+    { id: 'fl1-71', name: 'Jonathan David', team: 'Lille', position: 'FWD', price: 9.0, points: 125, league: 'FL1' as LeagueCode },
+    { id: 'fl1-72', name: 'Mohamed Bayo', team: 'Lille', position: 'FWD', price: 6.5, points: 68, league: 'FL1' as LeagueCode },
+
+    // Nice
+    { id: 'fl1-73', name: 'Marcin Bułka', team: 'Nice', position: 'GK', price: 5.0, points: 78, league: 'FL1' as LeagueCode },
+    { id: 'fl1-74', name: 'Jean-Clair Todibo', team: 'Nice', position: 'DEF', price: 5.0, points: 42, league: 'FL1' as LeagueCode },
+    { id: 'fl1-75', name: 'Dante', team: 'Nice', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-76', name: 'Youssouf Ndayishimiye', team: 'Nice', position: 'DEF', price: 4.5, points: 58, league: 'FL1' as LeagueCode },
+    { id: 'fl1-77', name: 'Melvin Bard', team: 'Nice', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-78', name: 'Pablo Rosario', team: 'Nice', position: 'MID', price: 5.0, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-79', name: 'Sofiane Diop', team: 'Nice', position: 'MID', price: 5.5, points: 62, league: 'FL1' as LeagueCode },
+    { id: 'fl1-80', name: 'Hicham Boudaoui', team: 'Nice', position: 'MID', price: 5.5, points: 65, league: 'FL1' as LeagueCode },
+    { id: 'fl1-81', name: 'Terem Moffi', team: 'Nice', position: 'FWD', price: 7.0, points: 82, league: 'FL1' as LeagueCode },
+    { id: 'fl1-82', name: 'Gaëtan Laborde', team: 'Nice', position: 'FWD', price: 6.5, points: 72, league: 'FL1' as LeagueCode },
+    { id: 'fl1-83', name: 'Evann Guessand', team: 'Nice', position: 'FWD', price: 6.0, points: 68, league: 'FL1' as LeagueCode },
+
+    // Lens
+    { id: 'fl1-84', name: 'Brice Samba', team: 'Lens', position: 'GK', price: 5.0, points: 78, league: 'FL1' as LeagueCode },
+    { id: 'fl1-85', name: 'Kevin Danso', team: 'Lens', position: 'DEF', price: 5.5, points: 75, league: 'FL1' as LeagueCode },
+    { id: 'fl1-86', name: 'Facundo Medina', team: 'Lens', position: 'DEF', price: 5.0, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-87', name: 'Jonathan Gradit', team: 'Lens', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-88', name: 'Deiver Machado', team: 'Lens', position: 'DEF', price: 4.5, points: 58, league: 'FL1' as LeagueCode },
+    { id: 'fl1-89', name: 'Andy Diouf', team: 'Lens', position: 'MID', price: 5.5, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-90', name: 'Neil El Aynaoui', team: 'Lens', position: 'MID', price: 5.5, points: 65, league: 'FL1' as LeagueCode },
+    { id: 'fl1-91', name: 'Adrien Thomasson', team: 'Lens', position: 'MID', price: 5.5, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-92', name: 'Angelo Fulgini', team: 'Lens', position: 'MID', price: 5.5, points: 72, league: 'FL1' as LeagueCode },
+    { id: 'fl1-93', name: 'M\'Bala Nzola', team: 'Lens', position: 'FWD', price: 6.5, points: 72, league: 'FL1' as LeagueCode },
+    { id: 'fl1-94', name: 'Elye Wahi', team: 'Lens', position: 'FWD', price: 7.0, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-95', name: 'Wesley Saïd', team: 'Lens', position: 'FWD', price: 6.0, points: 62, league: 'FL1' as LeagueCode },
+
+    // Rennes
+    { id: 'fl1-96', name: 'Steve Mandanda', team: 'Rennes', position: 'GK', price: 4.5, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-97', name: 'Lorenz Assignon', team: 'Rennes', position: 'DEF', price: 5.0, points: 65, league: 'FL1' as LeagueCode },
+    { id: 'fl1-98', name: 'Warmed Omari', team: 'Rennes', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-99', name: 'Christopher Wooh', team: 'Rennes', position: 'DEF', price: 4.5, points: 52, league: 'FL1' as LeagueCode },
+    { id: 'fl1-100', name: 'Adrien Truffert', team: 'Rennes', position: 'DEF', price: 5.0, points: 72, league: 'FL1' as LeagueCode },
+    { id: 'fl1-101', name: 'Baptiste Santamaria', team: 'Rennes', position: 'MID', price: 5.0, points: 58, league: 'FL1' as LeagueCode },
+    { id: 'fl1-102', name: 'Benjamin Bourigeaud', team: 'Rennes', position: 'MID', price: 6.0, points: 75, league: 'FL1' as LeagueCode },
+    { id: 'fl1-103', name: 'Ludovic Blas', team: 'Rennes', position: 'MID', price: 6.5, points: 82, league: 'FL1' as LeagueCode },
+    { id: 'fl1-104', name: 'Arnaud Kalimuendo', team: 'Rennes', position: 'FWD', price: 7.0, points: 78, league: 'FL1' as LeagueCode },
+    { id: 'fl1-105', name: 'Amine Gouiri', team: 'Rennes', position: 'FWD', price: 7.0, points: 82, league: 'FL1' as LeagueCode },
+    { id: 'fl1-106', name: 'Jota', team: 'Rennes', position: 'FWD', price: 5.5, points: 55, league: 'FL1' as LeagueCode },
+
+    // Brest
+    { id: 'fl1-107', name: 'Marco Bizot', team: 'Brest', position: 'GK', price: 5.0, points: 82, league: 'FL1' as LeagueCode },
+    { id: 'fl1-108', name: 'Brendan Chardonnet', team: 'Brest', position: 'DEF', price: 4.5, points: 58, league: 'FL1' as LeagueCode },
+    { id: 'fl1-109', name: 'Julien Le Cardinal', team: 'Brest', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-110', name: 'Kenny Lala', team: 'Brest', position: 'DEF', price: 5.0, points: 72, league: 'FL1' as LeagueCode },
+    { id: 'fl1-111', name: 'Massadio Haïdara', team: 'Brest', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-112', name: 'Pierre Lees-Melou', team: 'Brest', position: 'MID', price: 5.5, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-113', name: 'Hugo Magnetti', team: 'Brest', position: 'MID', price: 5.0, points: 58, league: 'FL1' as LeagueCode },
+    { id: 'fl1-114', name: 'Kamory Doumbia', team: 'Brest', position: 'MID', price: 6.0, points: 75, league: 'FL1' as LeagueCode },
+    { id: 'fl1-115', name: 'Martin Satriano', team: 'Brest', position: 'FWD', price: 7.0, points: 82, league: 'FL1' as LeagueCode },
+    { id: 'fl1-116', name: 'Ludovic Ajorque', team: 'Brest', position: 'FWD', price: 6.5, points: 72, league: 'FL1' as LeagueCode },
+    { id: 'fl1-117', name: 'Mathias Pereira Lage', team: 'Brest', position: 'FWD', price: 5.5, points: 62, league: 'FL1' as LeagueCode },
+
+    // Toulouse
+    { id: 'fl1-118', name: 'Guillaume Restes', team: 'Toulouse', position: 'GK', price: 5.0, points: 78, league: 'FL1' as LeagueCode },
+    { id: 'fl1-119', name: 'Rasmus Nicolaisen', team: 'Toulouse', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-120', name: 'Anthony Rouault', team: 'Toulouse', position: 'DEF', price: 4.5, points: 48, league: 'FL1' as LeagueCode },
+    { id: 'fl1-121', name: 'Warren Kamanzi', team: 'Toulouse', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-122', name: 'Moussa Diarra', team: 'Toulouse', position: 'DEF', price: 4.5, points: 52, league: 'FL1' as LeagueCode },
+    { id: 'fl1-123', name: 'Stijn Spierings', team: 'Toulouse', position: 'MID', price: 5.0, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-124', name: 'Vincent Sierro', team: 'Toulouse', position: 'MID', price: 5.5, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-125', name: 'Niklas Schmidt', team: 'Toulouse', position: 'MID', price: 5.5, points: 62, league: 'FL1' as LeagueCode },
+    { id: 'fl1-126', name: 'Thijs Dallinga', team: 'Toulouse', position: 'FWD', price: 6.5, points: 42, league: 'FL1' as LeagueCode },
+    { id: 'fl1-127', name: 'Zakaria Aboukhlal', team: 'Toulouse', position: 'FWD', price: 6.5, points: 78, league: 'FL1' as LeagueCode },
+    { id: 'fl1-128', name: 'Frank Magri', team: 'Toulouse', position: 'FWD', price: 5.5, points: 55, league: 'FL1' as LeagueCode },
+
+    // Strasbourg
+    { id: 'fl1-129', name: 'Matz Sels', team: 'Strasbourg', position: 'GK', price: 4.5, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-130', name: 'Alexander Djiku', team: 'Strasbourg', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-131', name: 'Gerzino Nyamsi', team: 'Strasbourg', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-132', name: 'Sanjin Prcić', team: 'Strasbourg', position: 'MID', price: 5.0, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-133', name: 'Habib Diarra', team: 'Strasbourg', position: 'MID', price: 6.0, points: 75, league: 'FL1' as LeagueCode },
+    { id: 'fl1-134', name: 'Adrien Thomasson', team: 'Strasbourg', position: 'MID', price: 5.5, points: 62, league: 'FL1' as LeagueCode },
+    { id: 'fl1-135', name: 'Kevin Gameiro', team: 'Strasbourg', position: 'FWD', price: 6.0, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-136', name: 'Dilane Bakwa', team: 'Strasbourg', position: 'FWD', price: 5.5, points: 58, league: 'FL1' as LeagueCode },
+
+    // Nantes
+    { id: 'fl1-137', name: 'Alban Lafont', team: 'Nantes', position: 'GK', price: 5.0, points: 72, league: 'FL1' as LeagueCode },
+    { id: 'fl1-138', name: 'Jean-Charles Castelletto', team: 'Nantes', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-139', name: 'Nicolas Pallois', team: 'Nantes', position: 'DEF', price: 4.5, points: 52, league: 'FL1' as LeagueCode },
+    { id: 'fl1-140', name: 'Pedro Chirivella', team: 'Nantes', position: 'MID', price: 5.0, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-141', name: 'Matthis Abline', team: 'Nantes', position: 'FWD', price: 6.5, points: 75, league: 'FL1' as LeagueCode },
+    { id: 'fl1-142', name: 'Moses Simon', team: 'Nantes', position: 'FWD', price: 6.5, points: 78, league: 'FL1' as LeagueCode },
+    { id: 'fl1-143', name: 'Mostafa Mohamed', team: 'Nantes', position: 'FWD', price: 6.0, points: 65, league: 'FL1' as LeagueCode },
+
+    // Montpellier
+    { id: 'fl1-144', name: 'Benjamin Lecomte', team: 'Montpellier', position: 'GK', price: 4.5, points: 62, league: 'FL1' as LeagueCode },
+    { id: 'fl1-145', name: 'Maxime Estève', team: 'Montpellier', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-146', name: 'Enzo Tchato', team: 'Montpellier', position: 'DEF', price: 4.5, points: 52, league: 'FL1' as LeagueCode },
+    { id: 'fl1-147', name: 'Jordan Ferri', team: 'Montpellier', position: 'MID', price: 5.0, points: 52, league: 'FL1' as LeagueCode },
+    { id: 'fl1-148', name: 'Téji Savanier', team: 'Montpellier', position: 'MID', price: 6.5, points: 82, league: 'FL1' as LeagueCode },
+    { id: 'fl1-149', name: 'Arnaud Nordin', team: 'Montpellier', position: 'FWD', price: 6.0, points: 65, league: 'FL1' as LeagueCode },
+    { id: 'fl1-150', name: 'Elye Wahi', team: 'Montpellier', position: 'FWD', price: 6.5, points: 52, league: 'FL1' as LeagueCode },
+
+    // Reims
+    { id: 'fl1-151', name: 'Yehvann Diouf', team: 'Reims', position: 'GK', price: 5.0, points: 75, league: 'FL1' as LeagueCode },
+    { id: 'fl1-152', name: 'Emmanuel Agbadou', team: 'Reims', position: 'DEF', price: 4.5, points: 58, league: 'FL1' as LeagueCode },
+    { id: 'fl1-153', name: 'Yunis Abdelhamid', team: 'Reims', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-154', name: 'Dion Lopy', team: 'Reims', position: 'MID', price: 5.5, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-155', name: 'Marshall Munetsi', team: 'Reims', position: 'MID', price: 5.0, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-156', name: 'Junya Ito', team: 'Reims', position: 'MID', price: 6.5, points: 78, league: 'FL1' as LeagueCode },
+    { id: 'fl1-157', name: 'Oumar Diakité', team: 'Reims', position: 'FWD', price: 6.0, points: 65, league: 'FL1' as LeagueCode },
+
+    // Le Havre
+    { id: 'fl1-158', name: 'Arthur Desmas', team: 'Le Havre', position: 'GK', price: 4.5, points: 65, league: 'FL1' as LeagueCode },
+    { id: 'fl1-159', name: 'Gautier Lloris', team: 'Le Havre', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-160', name: 'Loïc Music', team: 'Le Havre', position: 'DEF', price: 4.5, points: 52, league: 'FL1' as LeagueCode },
+    { id: 'fl1-161', name: 'Arouna Sangante', team: 'Le Havre', position: 'MID', price: 5.0, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-162', name: 'Yoann Salmier', team: 'Le Havre', position: 'MID', price: 5.0, points: 58, league: 'FL1' as LeagueCode },
+    { id: 'fl1-163', name: 'André Ayew', team: 'Le Havre', position: 'FWD', price: 5.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-164', name: 'Josue Casimir', team: 'Le Havre', position: 'FWD', price: 5.5, points: 58, league: 'FL1' as LeagueCode },
+
+    // Auxerre
+    { id: 'fl1-165', name: 'Donovan Léon', team: 'Auxerre', position: 'GK', price: 4.5, points: 62, league: 'FL1' as LeagueCode },
+    { id: 'fl1-166', name: 'Jubal', team: 'Auxerre', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-167', name: 'Clément Akpa', team: 'Auxerre', position: 'DEF', price: 4.0, points: 48, league: 'FL1' as LeagueCode },
+    { id: 'fl1-168', name: 'Elisha Owusu', team: 'Auxerre', position: 'MID', price: 5.0, points: 58, league: 'FL1' as LeagueCode },
+    { id: 'fl1-169', name: 'Gauthier Hein', team: 'Auxerre', position: 'MID', price: 5.5, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-170', name: 'Hamed Traoré', team: 'Auxerre', position: 'MID', price: 5.5, points: 62, league: 'FL1' as LeagueCode },
+    { id: 'fl1-171', name: 'Lassine Sinayoko', team: 'Auxerre', position: 'FWD', price: 6.0, points: 68, league: 'FL1' as LeagueCode },
+
+    // Angers
+    { id: 'fl1-172', name: 'Yahia Fofana', team: 'Angers', position: 'GK', price: 4.5, points: 62, league: 'FL1' as LeagueCode },
+    { id: 'fl1-173', name: 'Cédric Hountondji', team: 'Angers', position: 'DEF', price: 4.0, points: 48, league: 'FL1' as LeagueCode },
+    { id: 'fl1-174', name: 'Halid Šabanović', team: 'Angers', position: 'MID', price: 5.0, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-175', name: 'Himad Abdelli', team: 'Angers', position: 'MID', price: 5.5, points: 65, league: 'FL1' as LeagueCode },
+    { id: 'fl1-176', name: 'Zinedine Ferhat', team: 'Angers', position: 'MID', price: 5.5, points: 62, league: 'FL1' as LeagueCode },
+    { id: 'fl1-177', name: 'Esteban Lepaul', team: 'Angers', position: 'FWD', price: 5.5, points: 58, league: 'FL1' as LeagueCode },
+
+    // Saint-Étienne
+    { id: 'fl1-178', name: 'Gautier Larsonneur', team: 'Saint-Étienne', position: 'GK', price: 4.5, points: 62, league: 'FL1' as LeagueCode },
+    { id: 'fl1-179', name: 'Dylan Batubinsika', team: 'Saint-Étienne', position: 'DEF', price: 4.5, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-180', name: 'Léo Pétrot', team: 'Saint-Étienne', position: 'DEF', price: 4.5, points: 52, league: 'FL1' as LeagueCode },
+    { id: 'fl1-181', name: 'Louis Mouton', team: 'Saint-Étienne', position: 'MID', price: 5.0, points: 55, league: 'FL1' as LeagueCode },
+    { id: 'fl1-182', name: 'Mathieu Cafaro', team: 'Saint-Étienne', position: 'MID', price: 5.5, points: 65, league: 'FL1' as LeagueCode },
+    { id: 'fl1-183', name: 'Ibrahim Sissoko', team: 'Saint-Étienne', position: 'FWD', price: 6.0, points: 68, league: 'FL1' as LeagueCode },
+    { id: 'fl1-184', name: 'Augustine Boakye', team: 'Saint-Étienne', position: 'FWD', price: 5.5, points: 55, league: 'FL1' as LeagueCode },
+];
+
+export default LIGUE1_PLAYERS;

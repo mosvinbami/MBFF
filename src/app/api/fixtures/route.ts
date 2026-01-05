@@ -97,11 +97,11 @@ export async function GET(request: Request) {
             if (!stats) return {};
             return stats.reduce((acc, stat) => {
                 acc[stat.identifier] = {
-                    h: stat.h.map(s => ({ value: s.value, name: playerMapping[s.element]?.name || 'Unknown' })),
-                    a: stat.a.map(s => ({ value: s.value, name: playerMapping[s.element]?.name || 'Unknown' }))
+                    h: stat.h.map(s => ({ value: s.value, name: playerMapping[s.element]?.name || 'Unknown', element: s.element })),
+                    a: stat.a.map(s => ({ value: s.value, name: playerMapping[s.element]?.name || 'Unknown', element: s.element }))
                 };
                 return acc;
-            }, {} as Record<string, { h: { value: number; name: string }[]; a: { value: number; name: string }[] }>);
+            }, {} as Record<string, { h: { value: number; name: string; element: number }[]; a: { value: number; name: string; element: number }[] }>);
         };
 
         // Normalize fixtures

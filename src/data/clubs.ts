@@ -13,36 +13,48 @@ export interface Club {
     name: string;
     shortName: string;
     league: 'PL' | 'LL' | 'SA' | 'BL' | 'FL1';
-    logo: string;
+    logo: string; // Emoji fallback
+    logoUrl?: string; // Real logo URL
+    fplTeamId?: number; // For PL team logos from FPL CDN
     stadium: string;
     manager: string;
     founded: number;
 }
 
+// Helper to generate FPL badge URL
+const fplBadge = (id: number) => `https://resources.premierleague.com/premierleague/badges/t${id}.png`;
+
+// Helper to generate TheSportsDB badge URL (team name must match their database)
+const sportsDbBadge = (teamName: string) => `https://www.thesportsdb.com/images/media/team/badge/${encodeURIComponent(teamName.toLowerCase().replace(/ /g, '_'))}.png`;
+
+// Helper to generate Transfermarkt badge URL
+const tmBadge = (id: number) => `https://tmssl.akamaized.net/images/wappen/big/${id}.png`;
+
 export const CLUBS: Club[] = [
     // ==========================================
     // PREMIER LEAGUE (20 clubs) - 2025/26 Season
     // ==========================================
-    { id: 'arsenal', name: 'Arsenal', shortName: 'ARS', league: 'PL', logo: '🔴', stadium: 'Emirates Stadium', manager: 'Mikel Arteta', founded: 1886 },
-    { id: 'aston-villa', name: 'Aston Villa', shortName: 'AVL', league: 'PL', logo: '🟣', stadium: 'Villa Park', manager: 'Unai Emery', founded: 1874 },
-    { id: 'bournemouth', name: 'Bournemouth', shortName: 'BOU', league: 'PL', logo: '🍒', stadium: 'Vitality Stadium', manager: 'Andoni Iraola', founded: 1899 },
-    { id: 'brentford', name: 'Brentford', shortName: 'BRE', league: 'PL', logo: '🐝', stadium: 'Gtech Community Stadium', manager: 'Thomas Frank', founded: 1889 },
-    { id: 'brighton', name: 'Brighton', shortName: 'BHA', league: 'PL', logo: '🔵', stadium: 'Amex Stadium', manager: 'Fabian Hürzeler', founded: 1901 },
-    { id: 'chelsea', name: 'Chelsea', shortName: 'CHE', league: 'PL', logo: '💙', stadium: 'Stamford Bridge', manager: 'Enzo Maresca', founded: 1905 },
-    { id: 'crystal-palace', name: 'Crystal Palace', shortName: 'CRY', league: 'PL', logo: '🦅', stadium: 'Selhurst Park', manager: 'Oliver Glasner', founded: 1905 },
-    { id: 'everton', name: 'Everton', shortName: 'EVE', league: 'PL', logo: '🔷', stadium: 'Goodison Park', manager: 'Sean Dyche', founded: 1878 },
-    { id: 'fulham', name: 'Fulham', shortName: 'FUL', league: 'PL', logo: '⚪', stadium: 'Craven Cottage', manager: 'Marco Silva', founded: 1879 },
-    { id: 'ipswich', name: 'Ipswich Town', shortName: 'IPS', league: 'PL', logo: '🔵', stadium: 'Portman Road', manager: 'Kieran McKenna', founded: 1878 },
-    { id: 'leicester', name: 'Leicester City', shortName: 'LEI', league: 'PL', logo: '🦊', stadium: 'King Power Stadium', manager: 'Ruud van Nistelrooy', founded: 1884 },
-    { id: 'liverpool', name: 'Liverpool', shortName: 'LIV', league: 'PL', logo: '🔴', stadium: 'Anfield', manager: 'Arne Slot', founded: 1892 },
-    { id: 'man-city', name: 'Manchester City', shortName: 'MCI', league: 'PL', logo: '🩵', stadium: 'Etihad Stadium', manager: 'Pep Guardiola', founded: 1880 },
-    { id: 'man-utd', name: 'Manchester United', shortName: 'MUN', league: 'PL', logo: '🔴', stadium: 'Old Trafford', manager: 'Ruben Amorim', founded: 1878 },
-    { id: 'newcastle', name: 'Newcastle United', shortName: 'NEW', league: 'PL', logo: '⬛', stadium: "St James' Park", manager: 'Eddie Howe', founded: 1892 },
-    { id: 'nottm-forest', name: 'Nottingham Forest', shortName: 'NFO', league: 'PL', logo: '🌳', stadium: 'City Ground', manager: 'Nuno Espírito Santo', founded: 1865 },
-    { id: 'southampton', name: 'Southampton', shortName: 'SOU', league: 'PL', logo: '🔴', stadium: "St Mary's Stadium", manager: 'Ivan Jurić', founded: 1885 },
-    { id: 'tottenham', name: 'Tottenham Hotspur', shortName: 'TOT', league: 'PL', logo: '⚪', stadium: 'Tottenham Hotspur Stadium', manager: 'Ange Postecoglou', founded: 1882 },
-    { id: 'west-ham', name: 'West Ham United', shortName: 'WHU', league: 'PL', logo: '⚒️', stadium: 'London Stadium', manager: 'Julen Lopetegui', founded: 1895 },
-    { id: 'wolves', name: 'Wolverhampton Wanderers', shortName: 'WOL', league: 'PL', logo: '🐺', stadium: 'Molineux Stadium', manager: 'Vítor Pereira', founded: 1877 },
+    { id: 'arsenal', name: 'Arsenal', shortName: 'ARS', league: 'PL', logo: '🔴', logoUrl: fplBadge(3), fplTeamId: 3, stadium: 'Emirates Stadium', manager: 'Mikel Arteta', founded: 1886 },
+    { id: 'aston-villa', name: 'Aston Villa', shortName: 'AVL', league: 'PL', logo: '🟣', logoUrl: fplBadge(7), fplTeamId: 7, stadium: 'Villa Park', manager: 'Unai Emery', founded: 1874 },
+    { id: 'bournemouth', name: 'Bournemouth', shortName: 'BOU', league: 'PL', logo: '🍒', logoUrl: fplBadge(91), fplTeamId: 91, stadium: 'Vitality Stadium', manager: 'Andoni Iraola', founded: 1899 },
+    { id: 'brentford', name: 'Brentford', shortName: 'BRE', league: 'PL', logo: '🐝', logoUrl: fplBadge(94), fplTeamId: 94, stadium: 'Gtech Community Stadium', manager: 'Thomas Frank', founded: 1889 },
+    { id: 'brighton', name: 'Brighton', shortName: 'BHA', league: 'PL', logo: '🔵', logoUrl: fplBadge(36), fplTeamId: 36, stadium: 'Amex Stadium', manager: 'Fabian Hürzeler', founded: 1901 },
+    { id: 'chelsea', name: 'Chelsea', shortName: 'CHE', league: 'PL', logo: '💙', logoUrl: fplBadge(8), fplTeamId: 8, stadium: 'Stamford Bridge', manager: 'Enzo Maresca', founded: 1905 },
+    { id: 'crystal-palace', name: 'Crystal Palace', shortName: 'CRY', league: 'PL', logo: '🦅', logoUrl: fplBadge(31), fplTeamId: 31, stadium: 'Selhurst Park', manager: 'Oliver Glasner', founded: 1905 },
+    { id: 'everton', name: 'Everton', shortName: 'EVE', league: 'PL', logo: '🔷', logoUrl: fplBadge(11), fplTeamId: 11, stadium: 'Goodison Park', manager: 'Sean Dyche', founded: 1878 },
+    { id: 'fulham', name: 'Fulham', shortName: 'FUL', league: 'PL', logo: '⚪', logoUrl: fplBadge(54), fplTeamId: 54, stadium: 'Craven Cottage', manager: 'Marco Silva', founded: 1879 },
+    { id: 'ipswich', name: 'Ipswich Town', shortName: 'IPS', league: 'PL', logo: '🔵', logoUrl: fplBadge(40), fplTeamId: 40, stadium: 'Portman Road', manager: 'Kieran McKenna', founded: 1878 },
+    { id: 'leicester', name: 'Leicester City', shortName: 'LEI', league: 'PL', logo: '🦊', logoUrl: fplBadge(13), fplTeamId: 13, stadium: 'King Power Stadium', manager: 'Ruud van Nistelrooy', founded: 1884 },
+    { id: 'liverpool', name: 'Liverpool', shortName: 'LIV', league: 'PL', logo: '🔴', logoUrl: fplBadge(14), fplTeamId: 14, stadium: 'Anfield', manager: 'Arne Slot', founded: 1892 },
+    { id: 'man-city', name: 'Manchester City', shortName: 'MCI', league: 'PL', logo: '🩵', logoUrl: fplBadge(43), fplTeamId: 43, stadium: 'Etihad Stadium', manager: 'Pep Guardiola', founded: 1880 },
+    { id: 'man-utd', name: 'Manchester United', shortName: 'MUN', league: 'PL', logo: '🔴', logoUrl: fplBadge(1), fplTeamId: 1, stadium: 'Old Trafford', manager: 'Ruben Amorim', founded: 1878 },
+    { id: 'newcastle', name: 'Newcastle United', shortName: 'NEW', league: 'PL', logo: '⬛', logoUrl: fplBadge(4), fplTeamId: 4, stadium: "St James' Park", manager: 'Eddie Howe', founded: 1892 },
+    { id: 'nottm-forest', name: 'Nottingham Forest', shortName: 'NFO', league: 'PL', logo: '🌳', logoUrl: fplBadge(17), fplTeamId: 17, stadium: 'City Ground', manager: 'Nuno Espírito Santo', founded: 1865 },
+    { id: 'southampton', name: 'Southampton', shortName: 'SOU', league: 'PL', logo: '🔴', logoUrl: fplBadge(20), fplTeamId: 20, stadium: "St Mary's Stadium", manager: 'Ivan Jurić', founded: 1885 },
+    { id: 'tottenham', name: 'Tottenham Hotspur', shortName: 'TOT', league: 'PL', logo: '⚪', logoUrl: fplBadge(6), fplTeamId: 6, stadium: 'Tottenham Hotspur Stadium', manager: 'Ange Postecoglou', founded: 1882 },
+    { id: 'west-ham', name: 'West Ham United', shortName: 'WHU', league: 'PL', logo: '⚒️', logoUrl: fplBadge(21), fplTeamId: 21, stadium: 'London Stadium', manager: 'Julen Lopetegui', founded: 1895 },
+    { id: 'wolves', name: 'Wolverhampton Wanderers', shortName: 'WOL', league: 'PL', logo: '🐺', logoUrl: fplBadge(39), fplTeamId: 39, stadium: 'Molineux Stadium', manager: 'Vítor Pereira', founded: 1877 },
+
 
     // ==========================================
     // LA LIGA (20 clubs) - 2025/26 Season
@@ -95,24 +107,25 @@ export const CLUBS: Club[] = [
     // ==========================================
     // BUNDESLIGA (18 clubs) - 2025/26 Season
     // ==========================================
-    { id: 'augsburg', name: 'FC Augsburg', shortName: 'AUG', league: 'BL', logo: '🔴⚪💚', stadium: 'WWK Arena', manager: 'Jess Thorup', founded: 1907 },
-    { id: 'leverkusen', name: 'Bayer Leverkusen', shortName: 'B04', league: 'BL', logo: '🔴⚫', stadium: 'BayArena', manager: 'Xabi Alonso', founded: 1904 },
-    { id: 'bayern-munich', name: 'Bayern Munich', shortName: 'BAY', league: 'BL', logo: '🔴⚪', stadium: 'Allianz Arena', manager: 'Vincent Kompany', founded: 1900 },
-    { id: 'bochum', name: 'VfL Bochum', shortName: 'BOC', league: 'BL', logo: '🔵', stadium: 'Vonovia Ruhrstadion', manager: 'Dieter Hecking', founded: 1848 },
-    { id: 'dortmund', name: 'Borussia Dortmund', shortName: 'BVB', league: 'BL', logo: '💛⚫', stadium: 'Signal Iduna Park', manager: 'Nuri Şahin', founded: 1909 },
-    { id: 'mgladbach', name: "Borussia M'gladbach", shortName: 'BMG', league: 'BL', logo: '⚫⚪💚', stadium: 'Borussia-Park', manager: 'Gerardo Seoane', founded: 1900 },
-    { id: 'bremen', name: 'Werder Bremen', shortName: 'SVW', league: 'BL', logo: '💚⚪', stadium: 'Weserstadion', manager: 'Ole Werner', founded: 1899 },
-    { id: 'frankfurt', name: 'Eintracht Frankfurt', shortName: 'SGE', league: 'BL', logo: '⚫🔴⚪', stadium: 'Deutsche Bank Park', manager: 'Dino Toppmöller', founded: 1899 },
-    { id: 'freiburg', name: 'SC Freiburg', shortName: 'SCF', league: 'BL', logo: '🔴⚪⚫', stadium: 'Europa-Park Stadion', manager: 'Julian Schuster', founded: 1904 },
-    { id: 'heidenheim', name: '1. FC Heidenheim', shortName: 'HDH', league: 'BL', logo: '🔴🔵⚪', stadium: 'Voith-Arena', manager: 'Frank Schmidt', founded: 1946 },
-    { id: 'hoffenheim', name: 'TSG Hoffenheim', shortName: 'TSG', league: 'BL', logo: '🔵⚪', stadium: 'PreZero Arena', manager: 'Christian Ilzer', founded: 1899 },
-    { id: 'holstein-kiel', name: 'Holstein Kiel', shortName: 'KIE', league: 'BL', logo: '🔵⚪🔴', stadium: 'Holstein-Stadion', manager: 'Marcel Rapp', founded: 1900 },
-    { id: 'mainz', name: '1. FSV Mainz 05', shortName: 'M05', league: 'BL', logo: '🔴⚪', stadium: 'Mewa Arena', manager: 'Bo Henriksen', founded: 1905 },
-    { id: 'rb-leipzig', name: 'RB Leipzig', shortName: 'RBL', league: 'BL', logo: '🔴⚪', stadium: 'Red Bull Arena', manager: 'Marco Rose', founded: 2009 },
-    { id: 'st-pauli', name: 'FC St. Pauli', shortName: 'STP', league: 'BL', logo: '🏴‍☠️', stadium: 'Millerntor-Stadion', manager: 'Alexander Blessin', founded: 1910 },
-    { id: 'stuttgart', name: 'VfB Stuttgart', shortName: 'VFB', league: 'BL', logo: '🔴⚪', stadium: 'MHPArena', manager: 'Sebastian Hoeneß', founded: 1893 },
-    { id: 'union-berlin', name: 'Union Berlin', shortName: 'FCU', league: 'BL', logo: '🔴⚪', stadium: 'Stadion An der Alten Försterei', manager: 'Bo Svensson', founded: 1966 },
-    { id: 'wolfsburg', name: 'VfL Wolfsburg', shortName: 'WOB', league: 'BL', logo: '💚⚪', stadium: 'Volkswagen Arena', manager: 'Ralph Hasenhüttl', founded: 1945 },
+    { id: 'augsburg', name: 'FC Augsburg', shortName: 'AUG', league: 'BL', logo: '🔴⚪💚', logoUrl: tmBadge(167), stadium: 'WWK Arena', manager: 'Jess Thorup', founded: 1907 },
+    { id: 'leverkusen', name: 'Bayer Leverkusen', shortName: 'B04', league: 'BL', logo: '🔴⚫', logoUrl: tmBadge(15), stadium: 'BayArena', manager: 'Xabi Alonso', founded: 1904 },
+    { id: 'bayern-munich', name: 'Bayern Munich', shortName: 'BAY', league: 'BL', logo: '🔴⚪', logoUrl: tmBadge(27), stadium: 'Allianz Arena', manager: 'Vincent Kompany', founded: 1900 },
+    { id: 'bochum', name: 'VfL Bochum', shortName: 'BOC', league: 'BL', logo: '🔵', logoUrl: tmBadge(80), stadium: 'Vonovia Ruhrstadion', manager: 'Dieter Hecking', founded: 1848 },
+    { id: 'dortmund', name: 'Borussia Dortmund', shortName: 'BVB', league: 'BL', logo: '💛⚫', logoUrl: tmBadge(16), stadium: 'Signal Iduna Park', manager: 'Nuri Şahin', founded: 1909 },
+    { id: 'mgladbach', name: "Borussia M'gladbach", shortName: 'BMG', league: 'BL', logo: '⚫⚪💚', logoUrl: tmBadge(18), stadium: 'Borussia-Park', manager: 'Gerardo Seoane', founded: 1900 },
+    { id: 'bremen', name: 'Werder Bremen', shortName: 'SVW', league: 'BL', logo: '💚⚪', logoUrl: tmBadge(86), stadium: 'Weserstadion', manager: 'Ole Werner', founded: 1899 },
+    { id: 'frankfurt', name: 'Eintracht Frankfurt', shortName: 'SGE', league: 'BL', logo: '⚫🔴⚪', logoUrl: tmBadge(24), stadium: 'Deutsche Bank Park', manager: 'Dino Toppmöller', founded: 1899 },
+    { id: 'freiburg', name: 'SC Freiburg', shortName: 'SCF', league: 'BL', logo: '🔴⚪⚫', logoUrl: tmBadge(60), stadium: 'Europa-Park Stadion', manager: 'Julian Schuster', founded: 1904 },
+    { id: 'heidenheim', name: '1. FC Heidenheim', shortName: 'HDH', league: 'BL', logo: '🔴🔵⚪', logoUrl: tmBadge(2036), stadium: 'Voith-Arena', manager: 'Frank Schmidt', founded: 1946 },
+    { id: 'hoffenheim', name: 'TSG Hoffenheim', shortName: 'TSG', league: 'BL', logo: '🔵⚪', logoUrl: tmBadge(533), stadium: 'PreZero Arena', manager: 'Christian Ilzer', founded: 1899 },
+    { id: 'holstein-kiel', name: 'Holstein Kiel', shortName: 'KIE', league: 'BL', logo: '🔵⚪🔴', logoUrl: tmBadge(199), stadium: 'Holstein-Stadion', manager: 'Marcel Rapp', founded: 1900 },
+    { id: 'mainz', name: '1. FSV Mainz 05', shortName: 'M05', league: 'BL', logo: '🔴⚪', logoUrl: tmBadge(39), stadium: 'Mewa Arena', manager: 'Bo Henriksen', founded: 1905 },
+    { id: 'rb-leipzig', name: 'RB Leipzig', shortName: 'RBL', league: 'BL', logo: '🔴⚪', logoUrl: tmBadge(23826), stadium: 'Red Bull Arena', manager: 'Marco Rose', founded: 2009 },
+    { id: 'st-pauli', name: 'FC St. Pauli', shortName: 'STP', league: 'BL', logo: '🏴‍☠️', logoUrl: tmBadge(35), stadium: 'Millerntor-Stadion', manager: 'Alexander Blessin', founded: 1910 },
+    { id: 'stuttgart', name: 'VfB Stuttgart', shortName: 'VFB', league: 'BL', logo: '🔴⚪', logoUrl: tmBadge(79), stadium: 'MHPArena', manager: 'Sebastian Hoeneß', founded: 1893 },
+    { id: 'union-berlin', name: 'Union Berlin', shortName: 'FCU', league: 'BL', logo: '🔴⚪', logoUrl: tmBadge(89), stadium: 'Stadion An der Alten Försterei', manager: 'Bo Svensson', founded: 1966 },
+    { id: 'wolfsburg', name: 'VfL Wolfsburg', shortName: 'WOB', league: 'BL', logo: '💚⚪', logoUrl: tmBadge(82), stadium: 'Volkswagen Arena', manager: 'Ralph Hasenhüttl', founded: 1945 },
+
 
     // ==========================================
     // LIGUE 1 (18 clubs) - 2025/26 Season
@@ -143,13 +156,49 @@ export function getClubById(id: string): Club | undefined {
 }
 
 export function getClubByName(name: string): Club | undefined {
-    const lowerName = name.toLowerCase();
-    return CLUBS.find(c =>
-        c.name.toLowerCase() === lowerName ||
-        c.name.toLowerCase().includes(lowerName) ||
-        lowerName.includes(c.name.toLowerCase()) ||
-        c.shortName.toLowerCase() === lowerName
-    );
+    const lowerName = name.toLowerCase().trim();
+
+    // Common abbreviations mapping
+    const abbreviations: Record<string, string> = {
+        'man city': 'manchester city',
+        'man utd': 'manchester united',
+        'man united': 'manchester united',
+        'spurs': 'tottenham',
+        "nott'm forest": "nottingham forest",
+        'nottm forest': 'nottingham forest',
+        'brighton': 'brighton and hove albion',
+        'wolves': 'wolverhampton',
+        'newcastle': 'newcastle united',
+        'west ham': 'west ham united',
+        'leicester': 'leicester city',
+        'atletico': 'atletico madrid',
+        'atlético': 'atletico madrid',
+        'real': 'real madrid',
+        'barca': 'barcelona',
+        'bayern': 'bayern munich',
+        'dortmund': 'borussia dortmund',
+        'psg': 'paris saint-germain',
+        'inter': 'inter milan',
+        'ac milan': 'milan',
+    };
+
+    // Check if name has an abbreviation we should expand
+    const expandedName = abbreviations[lowerName] || lowerName;
+
+    return CLUBS.find(c => {
+        const clubName = c.name.toLowerCase();
+        const shortName = c.shortName.toLowerCase();
+
+        return (
+            clubName === expandedName ||
+            clubName === lowerName ||
+            shortName === lowerName ||
+            clubName.includes(expandedName) ||
+            clubName.includes(lowerName) ||
+            expandedName.includes(clubName) ||
+            lowerName.includes(clubName)
+        );
+    });
 }
 
 export function getClubsByLeague(league: Club['league']): Club[] {

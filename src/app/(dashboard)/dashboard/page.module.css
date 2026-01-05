@@ -2,398 +2,464 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
-    padding-bottom: 80px;
 }
 
-/* 1. Deadline Card */
-.deadlineCard {
-    background: #111;
-    border-radius: var(--radius-xl);
+/* Deadline Banner */
+.deadlineBanner {
     padding: var(--space-4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    position: relative;
-    overflow: hidden;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
 }
 
-.deadlineCard::after {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    right: -20px;
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, rgba(250, 70, 0, 0.2) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.deadlineHeader {
+.deadlineInfo {
     display: flex;
-    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
 }
 
 .deadlineLabel {
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     color: var(--color-text-secondary);
 }
 
-.deadlineDate {
-    color: var(--color-accent-primary);
+.deadlineTime {
+    font-size: 0.875rem;
     font-weight: 600;
+    color: var(--color-accent);
 }
 
-.deadlineContent {
+.deadlineRow {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     gap: var(--space-3);
 }
 
-.countdownBox {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: var(--radius-lg);
-    padding: var(--space-2) var(--space-3);
+.countdown {
     display: flex;
-    justify-content: space-between;
-    font-family: var(--font-mono);
+    align-items: center;
+    gap: var(--space-2);
+    flex: 1;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+}
+
+.countdownValue {
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--color-text-primary);
 }
 
-.setLineupBtn {
+.deadlineBtn {
+    padding: var(--space-2) var(--space-4);
     background: var(--color-accent-gradient);
     color: white;
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-lg);
+    font-weight: 600;
     font-size: 0.875rem;
-    font-weight: 700;
+    border-radius: var(--radius-lg);
     text-decoration: none;
-    white-space: nowrap;
-    box-shadow: 0 4px 12px rgba(250, 70, 0, 0.3);
+    transition: transform var(--transition-fast);
 }
 
-/* 2. Hero Budget Card */
-.heroCard {
-    position: relative;
-    background: black;
-    border-radius: var(--radius-2xl);
-    overflow: hidden;
-    min-height: 140px;
+.deadlineBtn:active {
+    transform: scale(0.97);
+}
+
+/* News Ticker */
+.newsTicker {
     display: flex;
     align-items: center;
-    padding: var(--space-5);
-    border: 1px solid rgba(250, 70, 0, 0.3);
-    box-shadow: 0 0 20px rgba(250, 70, 0, 0.15);
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: rgba(255, 107, 0, 0.08);
+    border: 1px solid rgba(255, 107, 0, 0.15);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
 }
 
-.heroBackground {
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(circle at 10% 100%, #FA4600 0%, transparent 50%),
-        radial-gradient(circle at 90% 20%, #FF6300 0%, transparent 40%);
-    opacity: 0.8;
-    filter: blur(20px);
-    z-index: 1;
+.newsIcon {
+    font-size: 0.875rem;
+    flex-shrink: 0;
 }
 
-.heroContent {
-    position: relative;
-    z-index: 2;
-    width: 100%;
+.newsTrack {
+    flex: 1;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
+}
+
+.newsScroll {
+    display: flex;
+    gap: var(--space-3);
+    white-space: nowrap;
+    animation: scrollNews 30s linear infinite;
+}
+
+.newsScroll:hover {
+    animation-play-state: paused;
+}
+
+.newsItem {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+
+.newsDivider {
+    color: var(--color-accent);
+    opacity: 0.5;
+}
+
+@keyframes scrollNews {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Budget Card */
+.budgetCard {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.budgetGroup {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-}
-
-.heroLabel {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.7);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
-.heroValue {
-    font-family: var(--font-display);
-    font-size: 2.25rem;
-    font-weight: 800;
-    color: white;
-}
-
-.playerCountBadge {
-    background: rgba(0, 0, 0, 0.4);
-    padding: var(--space-2) var(--space-3);
-    border-radius: var(--radius-lg);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    min-width: 80px;
-}
-
-.pcValue {
-    font-size: 1.125rem;
-    font-weight: 700;
-    color: white;
-}
-
-.pcLabel {
-    font-size: 0.625rem;
-    color: rgba(255, 255, 255, 0.6);
-    text-transform: uppercase;
-}
-
-/* 3. Action Grid */
-.actions {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-3);
-}
-
-.actionTile {
-    background: #151515;
-    /* Dark card bg */
+    padding: var(--space-4) var(--space-5);
+    background: var(--color-accent-gradient);
     border-radius: var(--radius-xl);
-    padding: var(--space-4);
     position: relative;
     overflow: hidden;
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.tileGlow {
+/* Wave/glow effect overlay */
+.budgetCard::before {
+    content: '';
     position: absolute;
-    bottom: -20px;
-    right: -20px;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+    inset: 0;
+    background:
+        radial-gradient(ellipse 200% 100% at 50% 120%, transparent 50%, rgba(0, 0, 0, 0.3)),
+        linear-gradient(135deg, transparent 30%, rgba(255, 180, 100, 0.25) 45%, transparent 55%);
     pointer-events: none;
 }
 
-.actionTile:nth-child(2) .tileGlow {
-    background: radial-gradient(circle, rgba(250, 70, 0, 0.1) 0%, transparent 70%);
-}
-
-.iconBox {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-}
-
-.iconBlue {
-    background: rgba(59, 130, 246, 0.2);
-    color: #60A5FA;
-}
-
-.iconOrange {
-    background: rgba(250, 70, 0, 0.2);
-    color: #FA4600;
-}
-
-.iconYellow {
-    background: rgba(234, 179, 8, 0.2);
-    color: #FACC15;
-}
-
-.iconGold {
-    background: rgba(250, 204, 21, 0.1);
-    color: #FDE047;
-}
-
-.actionMeta {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.actionTitle {
-    font-size: 0.9375rem;
-    font-weight: 700;
-    color: white;
-}
-
-.actionHint {
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
-}
-
-/* 4. Guidance Banner */
-.guidanceBanner {
-    background: linear-gradient(90deg, #1A1A1A 0%, #151515 100%);
-    border: 1px solid rgba(250, 70, 0, 0.3);
-    border-radius: var(--radius-lg);
-    padding: var(--space-3) var(--space-4);
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    position: relative;
-    overflow: hidden;
-}
-
-.guidanceBanner::after {
+/* Additional light streak */
+.budgetCard::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #FA4600, transparent);
-    opacity: 0.5;
+    height: 50%;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 200, 150, 0.15) 20%,
+            rgba(255, 220, 180, 0.3) 40%,
+            rgba(255, 200, 150, 0.15) 60%,
+            transparent 100%);
+    pointer-events: none;
 }
 
-.shieldIcon {
-    width: 28px;
-    height: 28px;
-    border: 2px solid #FA4600;
-    border-radius: 50%;
-    /* Simplified shield as circle for now */
+.budgetInfo {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #FA4600;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+    z-index: 1;
+}
+
+.budgetLabel {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.8);
+    text-transform: uppercase;
+}
+
+.budgetValue {
+    font-size: 2rem;
     font-weight: 800;
-    font-size: 1rem;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.guidanceText {
-    flex: 1;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 0.875rem;
-}
-
-.guidanceArrow {
-    color: #FA4600;
-    font-size: 1.25rem;
-    font-weight: 700;
-}
-
-/* 5. League Strip */
-.leagueStrip {
-    display: flex;
-    gap: var(--space-3);
-    overflow-x: auto;
-    padding: var(--space-1);
-    margin: 0 -4px;
-    /* Hide scrollbar */
-    scrollbar-width: none;
-}
-
-.leagueStrip::-webkit-scrollbar {
-    display: none;
-}
-
-.leagueBadge {
-    flex: 0 0 auto;
+.squadStatus {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 56px;
-    height: 56px;
-    background: #151515;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: var(--space-2) var(--space-4);
+    background: rgba(255, 255, 255, 0.2);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
     border-radius: var(--radius-lg);
-    gap: 4px;
+    position: relative;
+    z-index: 1;
 }
 
-.leagueBadge.met {
-    border-color: var(--color-success);
-    color: var(--color-success);
-}
-
-.lbCode {
-    font-weight: 800;
-    font-size: 0.75rem;
-    color: inherit;
-}
-
-.lbStatus {
-    display: flex;
-}
-
-.dotMet {
-    width: 6px;
-    height: 6px;
-    background: var(--color-success);
-    border-radius: 50%;
-    box-shadow: 0 0 5px var(--color-success);
-}
-
-.dotMiss {
-    width: 6px;
-    height: 6px;
-    background: var(--color-text-muted);
-    border-radius: 50%;
-    opacity: 0.3;
-}
-
-/* Rules */
-.rulesSection {
-    background: #111;
-    border-radius: var(--radius-xl);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.rulesToggle {
-    width: 100%;
-    padding: var(--space-4);
-    display: flex;
-    justify-content: space-between;
-    background: transparent;
-    border: none;
+.squadCount {
+    font-size: 1.25rem;
+    font-weight: 700;
     color: white;
+}
+
+.squadLabel {
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+}
+
+/* Actions Grid */
+.actionsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+}
+
+.actionCard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.actionCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--color-accent-gradient);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.actionCard:active {
+    background: var(--color-bg-hover);
+    transform: scale(0.98);
+}
+
+.actionCard:active::before {
+    opacity: 1;
+}
+
+.actionIconWrapper {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+}
+
+.actionIcon {
+    font-size: 1.25rem;
+}
+
+.actionTitle {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--color-text-primary);
+    margin-top: var(--space-1);
+}
+
+.actionDesc {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+/* Alert Banner */
+.alertBanner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.alertBanner:active {
+    background: var(--color-bg-hover);
+}
+
+.alertIcon {
+    font-size: 1.25rem;
+}
+
+.alertText {
+    flex: 1;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.alertHighlight {
+    color: var(--color-accent);
     font-weight: 600;
 }
 
-.chevron {
-    transition: transform 0.3s ease;
+.alertArrow {
+    font-size: 1.25rem;
+    color: var(--color-accent);
+    font-weight: 300;
 }
 
-.chevron.open {
+/* Tips Section */
+.tipsSection {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+}
+
+.tipsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: var(--space-4);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.tipsTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.tipsToggle {
+    font-size: 1.25rem;
+    color: var(--color-accent);
+    transition: transform var(--transition-fast);
+}
+
+.tipsToggle.open {
     transform: rotate(180deg);
 }
 
-.rulesContent {
-    padding: 0 var(--space-4) var(--space-4);
+.tipsList {
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
+    padding: 0 var(--space-4) var(--space-4);
 }
 
-.ruleItem {
+.tipItem {
     display: flex;
+    align-items: flex-start;
     gap: var(--space-3);
-    align-items: center;
 }
 
-.ruleNum {
+.tipNumber {
     width: 24px;
     height: 24px;
-    background: rgba(250, 70, 0, 0.2);
-    color: #FA4600;
-    border-radius: 50%;
+    background: var(--color-accent-gradient);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+}
+
+.tipItem p {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* League chips - keeping for compatibility */
+.leagueGrid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.leagueChip {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+}
+
+.leagueChip.met {
+    border-color: var(--color-success);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.leagueBadge {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
     font-size: 0.75rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.leagueChip[data-league="pl"] .leagueBadge {
+    background: var(--color-league-pl);
+}
+
+.leagueChip[data-league="ll"] .leagueBadge {
+    background: var(--color-league-ll);
+}
+
+.leagueChip[data-league="sa"] .leagueBadge {
+    background: var(--color-league-sa);
+}
+
+.leagueChip[data-league="bl"] .leagueBadge {
+    background: var(--color-league-bl);
+}
+
+.leagueChip[data-league="fl1"] .leagueBadge {
+    background: var(--color-league-fl1);
+}
+
+.leagueName {
+    flex: 1;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.leagueCount {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    padding: var(--space-1) var(--space-2);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+}
+
+.leagueChip.met .leagueCount {
+    color: var(--color-success);
+    background: rgba(16, 185, 129, 0.15);
 }

@@ -13,6 +13,16 @@ export const metadata: Metadata = {
   description: "The ultimate multi-league fantasy football experience. Build your dream team from 5 top European leagues.",
   keywords: ["fantasy football", "Premier League", "La Liga", "Serie A", "Bundesliga", "Ligue 1"],
   authors: [{ name: "MBFF Team" }],
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/logo.png",
+    apple: "/apple-touch-icon.png",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "MBFF",
+  },
   openGraph: {
     title: "MBFF - Mosvin Bami Fantasy Football",
     description: "The ultimate multi-league fantasy football experience",

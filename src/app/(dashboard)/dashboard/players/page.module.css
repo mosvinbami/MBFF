@@ -265,6 +265,17 @@
     color: var(--color-text-muted);
 }
 
+.playerImage {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+}
+
+.hidden {
+    display: none;
+}
+
 .playerInfo {
     flex: 1;
     min-width: 0;
@@ -716,24 +727,77 @@
 }
 
 .addBtn:active {
-    transform: scale(0.9);
+    transform: scale(0.95);
 }
 
-.addBtn.disabled {
-    background: #333;
-    color: #555;
-    box-shadow: none;
-    pointer-events: none;
+/* Empty State */
+.empty {
+    text-align: center;
+    padding: var(--space-8);
+    color: var(--color-text-muted);
 }
 
-.addBtn.added {
-    background: #22C55E;
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
-}
-
+/* Loading State */
 .loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-12);
+    gap: var(--space-3);
+    text-align: center;
+}
+
+.spinner {
+    font-size: 3rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loadingHint {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+/* Error State */
+.error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
     padding: var(--space-8);
     text-align: center;
+    color: var(--color-error);
+}
+
+.error button {
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-accent-gradient);
+    border: none;
+    border-radius: var(--radius-lg);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Data Source Info */
+.dataSource {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-md);
+    font-size: 0.6875rem;
     color: var(--color-text-muted);
 }
 

@@ -7,7 +7,7 @@ export default function Home() {
       {/* Navigation */}
       <nav className={styles.nav}>
         <div className={styles.navBrand}>
-          <div className={styles.logo}>⚽</div>
+          <img src="/logo.png" alt="MBFF" width={40} height={40} className={styles.logo} />
           <span>MBFF</span>
         </div>
         <div className={styles.navLinks}>
@@ -160,7 +160,7 @@ export default function Home() {
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
           <div className={styles.footerBrand}>
-            <div className={styles.logo}>⚽</div>
+            <img src="/logo.png" alt="MBFF" width={32} height={32} className={styles.logo} />
             <span>Mosvin Bami Fantasy Football</span>
           </div>
           <p className={styles.footerCopy}>

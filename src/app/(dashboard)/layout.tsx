@@ -1,30 +1,43 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import styles from './layout.module.css';
-import { SquadProvider, useSquad } from '@/contexts/SquadContext';
+import { SquadProvider } from '@/contexts/SquadContext';
 import { PlayersProvider } from '@/contexts/PlayersContext';
+import { WatchlistProvider } from '@/contexts/WatchlistContext';
+import { UserProfileProvider, useUserProfile } from '@/contexts/UserProfileContext';
 
 function DashboardHeader() {
-    const { squad, budgetRemaining } = useSquad();
+    const { profile } = useUserProfile();
 
     return (
         <header className={styles.header}>
-            <div className={styles.headerLeft}>
-                <div className={styles.logo}>⚽</div>
-                <div className={styles.headerInfo}>
-                    <span className={styles.headerTitle}>Gameweek 1</span>
-                    <span className={styles.headerSubtitle}>€{budgetRemaining.toFixed(1)}M left</span>
+            <div className={styles.topBar}>
+                <div className={styles.logoSection}>
+                    <img
+                        src="/logo.png"
+                        alt="MBFF"
+                        width={36}
+                        height={36}
+                        className={styles.logoIcon}
+                    />
+                    <span className={styles.logoText}>MBFF</span>
                 </div>
-            </div>
-            <div className={styles.headerStats}>
-                <div className={styles.headerStat}>
-                    <span className={styles.statValue}>{squad.length}</span>
-                    <span className={styles.statLabel}>Squad</span>
-                </div>
-                <div className={styles.headerStat}>
-                    <span className={styles.statValue}>{squad.filter(p => p.isStarter).length}</span>
-                    <span className={styles.statLabel}>XI</span>
+                <div className={styles.headerActions}>
+                    <Link href="/dashboard/profile" className={styles.avatarLink}>
+                        <div className={styles.avatar}>
+                            {profile.avatarUrl ? (
+                                <img
+                                    src={profile.avatarUrl}
+                                    alt={profile.username}
+                                    className={styles.avatarImage}
+                                />
+                            ) : (
+                                <span>👤</span>
+                            )}
+                        </div>
+                    </Link>
                 </div>
             </div>
         </header>
@@ -32,6 +45,8 @@ function DashboardHeader() {
 }
 
 function DashboardContent({ children }: { children: React.ReactNode }) {
+    const pathname = usePathname();
+
     return (
         <div className={styles.container}>
             <DashboardHeader />
@@ -43,27 +58,39 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
 
             {/* Bottom Navigation */}
             <nav className={styles.bottomNav}>
-                <Link href="/dashboard" className={styles.navItem}>
+                <Link
+                    href="/dashboard"
+                    className={`${styles.navItem} ${pathname === '/dashboard' ? styles.active : ''}`}
+                >
                     <span className={styles.navIcon}>🏠</span>
                     <span className={styles.navLabel}>Home</span>
                 </Link>
-                <Link href="/dashboard/players" className={styles.navItem}>
+                <Link
+                    href="/dashboard/players"
+                    className={`${styles.navItem} ${pathname === '/dashboard/players' ? styles.active : ''}`}
+                >
                     <span className={styles.navIcon}>👥</span>
                     <span className={styles.navLabel}>Players</span>
                 </Link>
-                <Link href="/dashboard/fixtures" className={styles.navItem}>
+                <Link
+                    href="/dashboard/fixtures"
+                    className={`${styles.navItem} ${pathname === '/dashboard/fixtures' ? styles.active : ''}`}
+                >
                     <span className={styles.navIcon}>📅</span>
                     <span className={styles.navLabel}>Fixtures</span>
                 </Link>
-                <Link href="/dashboard/squad" className={styles.navItem}>
+                <Link
+                    href="/dashboard/squad"
+                    className={`${styles.navItem} ${pathname === '/dashboard/squad' ? styles.active : ''}`}
+                >
                     <span className={styles.navIcon}>📋</span>
                     <span className={styles.navLabel}>Squad</span>
                 </Link>
-                <Link href="/dashboard/transfers" className={styles.navItem}>
-                    <span className={styles.navIcon}>⇄</span>
-                    <span className={styles.navLabel}>Transfers</span>
-                </Link>
-                <Link href="/dashboard/leaderboard" className={styles.navItem}>
+
+                <Link
+                    href="/dashboard/leaderboard"
+                    className={`${styles.navItem} ${pathname === '/dashboard/leaderboard' ? styles.active : ''}`}
+                >
                     <span className={styles.navIcon}>🏆</span>
                     <span className={styles.navLabel}>Rank</span>
                 </Link>
@@ -78,11 +105,15 @@ export default function DashboardLayout({
     children: React.ReactNode;
 }) {
     return (
-        <PlayersProvider>
-            <SquadProvider>
-                <DashboardContent>{children}</DashboardContent>
-            </SquadProvider>
-        </PlayersProvider>
+        <UserProfileProvider>
+            <PlayersProvider>
+                <WatchlistProvider>
+                    <SquadProvider>
+                        <DashboardContent>{children}</DashboardContent>
+                    </SquadProvider>
+                </WatchlistProvider>
+            </PlayersProvider>
+        </UserProfileProvider>
     );
 }
 

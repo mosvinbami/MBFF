@@ -162,70 +162,61 @@ export default function LeaderboardPage() {
         </button>
       </div>
 
-      {/* Stats Legend */}
-      <div className={styles.legend}>
-        <span>⚽ Goals</span>
-        <span>🅰️ Assists</span>
-        <span>🧤 CS</span>
-        <span>🟡 YC</span>
-        <span>🔴 RC</span>
-        <span>⛔ OG</span>
-      </div>
+      {/* Table Section */}
+      <div className={styles.tableWrapper}>
+        <div className={styles.tableHeader}>
+          <span className={styles.colPos}>#</span>
+          <span className={styles.colManager}>Manager</span>
+          <span className={styles.colStat} title="Goals">⚽</span>
+          <span className={styles.colStat} title="Assists">🅰️</span>
+          <span className={styles.colStat} title="Clean Sheets">🧤</span>
+          <span className={styles.colStat} title="Yellow Cards">🟡</span>
+          <span className={styles.colStat} title="Red Cards">🔴</span>
+          <span className={styles.colStat} title="Own Goals">⛔</span>
+          <span className={styles.colPts} title="Total Points">Pts</span>
+        </div>
 
-      {/* Table Header */}
-      <div className={styles.tableHeader}>
-        <span className={styles.colPos}>#</span>
-        <span className={styles.colManager}>Manager</span>
-        <span className={styles.colStat}>⚽</span>
-        <span className={styles.colStat}>🅰️</span>
-        <span className={styles.colStat}>🧤</span>
-        <span className={styles.colStat}>🟡</span>
-        <span className={styles.colStat}>🔴</span>
-        <span className={styles.colStat}>⛔</span>
-        <span className={styles.colPts}>Pts</span>
-      </div>
+        <div className={styles.tableBody}>
+          {data.map((user, index) => {
+            const rank = view === 'weekly' ? (user as typeof user & { gwRank: number }).gwRank : user.rank;
+            const goals = view === 'weekly' ? user.gwGoals : user.totalGoals;
+            const assists = view === 'weekly' ? user.gwAssists : user.totalAssists;
+            const cleanSheets = view === 'weekly' ? user.gwCleanSheets : user.totalCleanSheets;
+            const yellowCards = view === 'weekly' ? user.gwYellowCards : user.totalYellowCards;
+            const redCards = view === 'weekly' ? user.gwRedCards : user.totalRedCards;
+            const ownGoals = view === 'weekly' ? user.gwOwnGoals : user.totalOwnGoals;
+            const points = view === 'weekly' ? user.gwPoints : user.totalPoints;
 
-      {/* Table Body */}
-      <div className={styles.tableBody}>
-        {data.map((user, index) => {
-          const rank = view === 'weekly' ? (user as typeof user & { gwRank: number }).gwRank : user.rank;
-          const goals = view === 'weekly' ? user.gwGoals : user.totalGoals;
-          const assists = view === 'weekly' ? user.gwAssists : user.totalAssists;
-          const cleanSheets = view === 'weekly' ? user.gwCleanSheets : user.totalCleanSheets;
-          const yellowCards = view === 'weekly' ? user.gwYellowCards : user.totalYellowCards;
-          const redCards = view === 'weekly' ? user.gwRedCards : user.totalRedCards;
-          const ownGoals = view === 'weekly' ? user.gwOwnGoals : user.totalOwnGoals;
-          const points = view === 'weekly' ? user.gwPoints : user.totalPoints;
+            const userId = userIdMap[user.username] || 'user-1';
 
-          const userId = userIdMap[user.username] || 'user-1';
-
-          return (
-            <Link
-              key={user.username}
-              href={`/dashboard/profile/${userId}`}
-              className={`${styles.tableRow} ${rank <= 3 ? styles.topThree : ''}`}
-              data-rank={rank}
-            >
-              <span className={styles.rowPos}>
-                {rank <= 3 ? (rank === 1 ? '🥇' : rank === 2 ? '🥈' : '🥉') : rank}
-              </span>
-              <div className={styles.rowManager}>
-                <span className={styles.avatar}>{user.avatar}</span>
-                <div className={styles.managerInfo}>
-                  <span className={styles.username}>{user.username}</span>
-                  <span className={styles.teamName}>{user.teamName}</span>
+            return (
+              <Link
+                key={user.username}
+                href={`/dashboard/profile/${userId}`}
+                className={`${styles.tableRow} ${rank <= 3 ? styles.topThree : ''}`}
+                data-rank={rank}
+              >
+                <span className={styles.rowPos}>
+                  {rank <= 3 ? (rank === 1 ? '🥇' : rank === 2 ? '🥈' : '🥉') : rank}
+                </span>
+                <div className={styles.rowManager}>
+                  <span className={styles.avatar}>{user.avatar}</span>
+                  <div className={styles.managerInfo}>
+                    <span className={styles.username}>{user.username}</span>
+                    <span className={styles.teamName}>{user.teamName}</span>
+                  </div>
                 </div>
-              </div>
-              <span className={styles.rowStat}>{goals}</span>
-              <span className={styles.rowStat}>{assists}</span>
-              <span className={styles.rowStat}>{cleanSheets}</span>
-              <span className={`${styles.rowStat} ${styles.yellow}`}>{yellowCards}</span>
-              <span className={`${styles.rowStat} ${styles.red}`}>{redCards}</span>
-              <span className={`${styles.rowStat} ${styles.ownGoal}`}>{ownGoals}</span>
-              <span className={styles.rowPts}>{points}</span>
-            </Link>
-          );
-        })}
+                <span className={styles.rowStat}>{goals}</span>
+                <span className={styles.rowStat}>{assists}</span>
+                <span className={styles.rowStat}>{cleanSheets}</span>
+                <span className={`${styles.rowStat} ${styles.yellow}`}>{yellowCards}</span>
+                <span className={`${styles.rowStat} ${styles.red}`}>{redCards}</span>
+                <span className={`${styles.rowStat} ${styles.ownGoal}`}>{ownGoals}</span>
+                <span className={styles.rowPts}>{points}</span>
+              </Link>
+            );
+          })}
+        </div>
       </div>
 
       {/* Stats Info */}

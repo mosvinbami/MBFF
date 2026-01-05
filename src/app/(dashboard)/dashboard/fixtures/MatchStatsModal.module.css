@@ -14,7 +14,7 @@
 }
 
 .modal {
-    background: var(--color-bg-card);
+    background: var(--card);
     border-radius: var(--radius-xl);
     width: 100%;
     max-width: 400px;
@@ -23,7 +23,7 @@
     flex-direction: column;
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--border);
     animation: slideUp 0.3s ease-out;
 }
 
@@ -40,10 +40,10 @@
 }
 
 .header {
-    background: var(--color-bg-tertiary);
+    background: var(--card);
     padding: var(--space-4);
     position: relative;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--border);
 }
 
 .scoreHeader {
@@ -61,7 +61,7 @@
 }
 
 .score {
-    background: var(--color-bg-primary);
+    background: var(--background);
     padding: var(--space-2) var(--space-4);
     border-radius: var(--radius-lg);
     font-weight: 700;
@@ -83,7 +83,7 @@
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.1);
     border: none;
-    color: var(--color-text-secondary);
+    color: var(--muted-foreground);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -104,7 +104,7 @@
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--color-text-muted);
+    color: var(--muted-foreground);
     text-align: center;
     font-weight: 600;
     margin-bottom: var(--space-1);
@@ -138,17 +138,17 @@
 .statLabel {
     width: 80px;
     text-align: center;
-    color: var(--color-text-muted);
+    color: var(--muted-foreground);
     font-size: 0.75rem;
     padding-top: 2px;
 }
 
 .statItem {
-    color: var(--color-text-primary);
+    color: var(--foreground);
 }
 
 .statValue {
-    color: var(--color-accent-primary);
+    color: var(--primary);
     font-weight: 600;
     margin-left: 4px;
 }
@@ -160,13 +160,13 @@
 
 .divider {
     height: 1px;
-    background: var(--color-border);
+    background: var(--border);
     margin: var(--space-2) 0;
 }
 
 .noData {
     text-align: center;
-    color: var(--color-text-muted);
+    color: var(--muted-foreground);
     font-size: 0.875rem;
     padding: var(--space-4);
 }

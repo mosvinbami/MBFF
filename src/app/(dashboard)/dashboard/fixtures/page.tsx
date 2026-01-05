@@ -6,7 +6,8 @@ import { CLUBS, getClubByName } from '@/data/clubs';
 import styles from './page.module.css';
 import { MatchStats } from './MatchStatsModal';
 
-type LeagueCode = 'PL' | 'LL' | 'SA' | 'BL' | 'FL1';
+// All competitions (leagues + cups) in one type
+type CompetitionCode = 'PL' | 'LL' | 'SA' | 'BL' | 'FL1' | 'UCL' | 'UEL' | 'FACUP' | 'EFLCUP' | 'COPADEL' | 'COPPA' | 'DFBPOKAL' | 'COUPEFR';
 type ViewMode = 'fixtures' | 'clubs';
 type FilterType = 'live' | 'results' | 'upcoming';
 
@@ -25,7 +26,7 @@ interface Fixture {
 }
 
 export default function FixturesPage() {
-    const [selectedLeague, setSelectedLeague] = useState<LeagueCode>('PL');
+    const [selectedCompetition, setSelectedCompetition] = useState<CompetitionCode>('PL');
     const [viewMode, setViewMode] = useState<ViewMode>('fixtures');
     const [activeFilter, setActiveFilter] = useState<FilterType>('results');
     const [fixtures, setFixtures] = useState<Fixture[]>([]);
@@ -33,12 +34,32 @@ export default function FixturesPage() {
     const [error, setError] = useState<string | null>(null);
     const [liveCount, setLiveCount] = useState(0);
 
-    // Fetch fixtures on mount (Premier League only via FPL API)
+    // Competition names for display
+    const competitionNames: Record<string, string> = {
+        'PL': 'Premier League',
+        'LL': 'La Liga',
+        'SA': 'Serie A',
+        'BL': 'Bundesliga',
+        'FL1': 'Ligue 1',
+        'UCL': 'Champions League',
+        'UEL': 'Europa League',
+        'FACUP': 'FA Cup',
+        'EFLCUP': 'EFL Cup',
+        'COPADEL': 'Copa del Rey',
+        'COPPA': 'Coppa Italia',
+        'DFBPOKAL': 'DFB Pokal',
+        'COUPEFR': 'Coupe de France',
+    };
+
+    // Helper to check if competition is a cup
+    const isCup = (comp: CompetitionCode) => ['UCL', 'UEL', 'FACUP', 'EFLCUP', 'COPADEL', 'COPPA', 'DFBPOKAL', 'COUPEFR'].includes(comp);
+    const isLeague = (comp: CompetitionCode) => ['PL', 'LL', 'SA', 'BL', 'FL1'].includes(comp);
+
+    // Fetch fixtures on mount
     useEffect(() => {
         async function loadFixtures() {
-            // Only fetch for Premier League (other leagues don't have free API access)
-            if (selectedLeague !== 'PL') {
-                setFixtures([]);
+            // Skip fetch if in clubs view
+            if (viewMode === 'clubs') {
                 setLoading(false);
                 return;
             }
@@ -47,17 +68,32 @@ export default function FixturesPage() {
             setError(null);
 
             try {
-                const response = await fetch('/api/fixtures');
+                let apiUrl = '';
+
+                if (isCup(selectedCompetition)) {
+                    // Cup competitions via TheSportsDB
+                    apiUrl = `/api/fixtures-thesportsdb?league=${selectedCompetition}`;
+                } else if (selectedCompetition === 'PL') {
+                    apiUrl = '/api/fixtures';
+                } else if (selectedCompetition === 'BL') {
+                    apiUrl = '/api/fixtures-bundesliga';
+                } else if (['LL', 'SA', 'FL1'].includes(selectedCompetition)) {
+                    // La Liga, Serie A, Ligue 1 via TheSportsDB
+                    apiUrl = `/api/fixtures-thesportsdb?league=${selectedCompetition}`;
+                } else {
+                    setFixtures([]);
+                    setLoading(false);
+                    return;
+                }
+
+                const response = await fetch(apiUrl);
                 const data = await response.json();
 
                 if (data.success) {
                     setFixtures(data.fixtures);
-                    const live = data.liveCount || 0;
+                    const live = data.fixtures?.filter((f: Fixture) => f.status === 'live').length || 0;
                     setLiveCount(live);
-                    // Auto-select live if there are live matches
-                    if (live > 0) {
-                        setActiveFilter('live');
-                    }
+                    // Keep default filter (results) - don't auto-switch
                 } else {
                     setError(data.error || 'Failed to load fixtures');
                 }
@@ -74,7 +110,7 @@ export default function FixturesPage() {
         // Refresh every 60 seconds for live updates
         const interval = setInterval(loadFixtures, 60000);
         return () => clearInterval(interval);
-    }, [selectedLeague]);
+    }, [selectedCompetition, viewMode]);
 
     // Filter fixtures based on active filter (single selection)
     const filteredFixtures = fixtures
@@ -93,10 +129,9 @@ export default function FixturesPage() {
             return new Date(b.date).getTime() - new Date(a.date).getTime();
         });
 
-    // Get clubs based on filter
-    const filteredClubs = selectedLeague === 'PL'
-        ? CLUBS.filter(c => c.league === 'PL')
-        : CLUBS.filter(c => c.league === selectedLeague);
+    // Get clubs based on selected league (only for league competitions)
+    const selectedLeagueForClubs = isLeague(selectedCompetition) ? selectedCompetition : 'PL';
+    const filteredClubs = CLUBS.filter(c => c.league === selectedLeagueForClubs);
 
     // Group fixtures by date
     const fixturesByDate = filteredFixtures.reduce((acc, fixture) => {
@@ -136,7 +171,7 @@ export default function FixturesPage() {
                 )}
             </div>
 
-            {/* View Toggle */}
+            {/* View Toggle - Simplified to just Fixtures and Clubs */}
             <div className={styles.viewToggle}>
                 <button
                     className={`${styles.toggleBtn} ${viewMode === 'fixtures' ? styles.active : ''}`}
@@ -152,21 +187,53 @@ export default function FixturesPage() {
                 </button>
             </div>
 
-            {/* League Filter */}
-            <div className={styles.leagueFilter}>
-                {(['PL', 'LL', 'SA', 'BL', 'FL1'] as LeagueCode[]).map(league => (
-                    <button
-                        key={league}
-                        className={`${styles.leagueBtn} ${selectedLeague === league ? styles.active : ''}`}
-                        onClick={() => setSelectedLeague(league)}
-                    >
-                        {league}
-                        <span className={styles.clubCount}>
-                            {CLUBS.filter(c => c.league === league).length}
-                        </span>
-                    </button>
-                ))}
-            </div>
+            {/* Combined Competition Selector - Leagues + Cups */}
+            {viewMode === 'fixtures' && (
+                <>
+                    {/* Leagues Row */}
+                    <div className={styles.leagueFilter}>
+                        {(['PL', 'LL', 'SA', 'BL', 'FL1'] as CompetitionCode[]).map(comp => (
+                            <button
+                                key={comp}
+                                className={`${styles.leagueBtn} ${selectedCompetition === comp ? styles.active : ''}`}
+                                onClick={() => setSelectedCompetition(comp)}
+                            >
+                                {comp}
+                            </button>
+                        ))}
+                    </div>
+                    {/* Cups Row */}
+                    <div className={styles.leagueFilter}>
+                        {(['UCL', 'UEL', 'FACUP', 'EFLCUP', 'COPADEL', 'COPPA', 'DFBPOKAL', 'COUPEFR'] as CompetitionCode[]).map(comp => (
+                            <button
+                                key={comp}
+                                className={`${styles.leagueBtn} ${selectedCompetition === comp ? styles.active : ''}`}
+                                onClick={() => setSelectedCompetition(comp)}
+                            >
+                                {comp === 'UCL' ? '🏆' : comp === 'UEL' ? '🥈' : '🏅'} {competitionNames[comp]?.split(' ')[0] || comp}
+                            </button>
+                        ))}
+                    </div>
+                </>
+            )}
+
+            {/* Clubs view - show league filter */}
+            {viewMode === 'clubs' && (
+                <div className={styles.leagueFilter}>
+                    {(['PL', 'LL', 'SA', 'BL', 'FL1'] as CompetitionCode[]).map(comp => (
+                        <button
+                            key={comp}
+                            className={`${styles.leagueBtn} ${selectedCompetition === comp ? styles.active : ''}`}
+                            onClick={() => setSelectedCompetition(comp)}
+                        >
+                            {comp}
+                            <span className={styles.clubCount}>
+                                {CLUBS.filter(c => c.league === comp).length}
+                            </span>
+                        </button>
+                    ))}
+                </div>
+            )}
 
             {/* Fixtures View */}
             {viewMode === 'fixtures' && (
@@ -208,16 +275,10 @@ export default function FixturesPage() {
                         </div>
                     )}
 
-                    {/* No Data for Other Leagues */}
-                    {!loading && selectedLeague !== 'PL' && (
-                        <div className={styles.noData}>
-                            <p>📊 Live fixtures available for Premier League only</p>
-                            <p className={styles.hint}>Switch to PL for real-time match data</p>
-                        </div>
-                    )}
+                    {/* No Data message removed - all leagues now supported */}
 
-                    {/* Fixtures List */}
-                    {!loading && !error && selectedLeague === 'PL' && (
+                    {/* Fixtures List (for all competitions) */}
+                    {!loading && !error && (
                         <div className={styles.fixturesList}>
                             {sortedDates.map(date => (
                                 <div key={date} className={styles.dateGroup}>
@@ -305,7 +366,7 @@ export default function FixturesPage() {
             {viewMode === 'clubs' && (
                 <div className={styles.clubsList}>
                     <div className={styles.clubsHeader}>
-                        <span>{filteredClubs.length} clubs in {selectedLeague}</span>
+                        <span>{filteredClubs.length} clubs in {selectedLeagueForClubs}</span>
                     </div>
                     {filteredClubs.map(club => (
                         <Link

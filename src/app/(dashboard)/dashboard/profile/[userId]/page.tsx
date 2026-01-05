@@ -2,141 +2,52 @@
 
 import { use } from 'react';
 import Link from 'next/link';
-import styles from '../page.module.css';
-
-// Mock users database - will be replaced with actual database
-const mockUsers: Record<string, {
-    id: string;
-    username: string;
-    teamName: string;
-    avatar: string;
-    joinedDate: string;
-    overallRank: number;
-    gwRank: number;
-    totalPoints: number;
-    gwPoints: number;
-    formation: string;
-    starters: Array<{ name: string; position: 'GK' | 'DEF' | 'MID' | 'FWD'; isCaptain?: boolean; isViceCaptain?: boolean }>;
-    bench: Array<{ name: string; position: 'GK' | 'DEF' | 'MID' | 'FWD' }>;
-}> = {
-    'current-user': {
-        id: 'current-user',
-        username: 'FootballFan23',
-        teamName: 'FC Thunder',
-        avatar: '⚽',
-        joinedDate: '2025-08-15',
-        overallRank: 156,
-        gwRank: 89,
-        totalPoints: 342,
-        gwPoints: 52,
-        formation: '4-3-3',
-        starters: [
-            { name: 'Alisson', position: 'GK' },
-            { name: 'Alexander-Arnold', position: 'DEF' },
-            { name: 'Van Dijk', position: 'DEF' },
-            { name: 'Saliba', position: 'DEF' },
-            { name: 'Robertson', position: 'DEF' },
-            { name: 'Saka', position: 'MID' },
-            { name: 'Bellingham', position: 'MID', isCaptain: true },
-            { name: 'Palmer', position: 'MID' },
-            { name: 'Haaland', position: 'FWD', isViceCaptain: true },
-            { name: 'Mbappé', position: 'FWD' },
-            { name: 'Kane', position: 'FWD' },
-        ],
-        bench: [
-            { name: 'Donnarumma', position: 'GK' },
-            { name: 'Hakimi', position: 'DEF' },
-            { name: 'Barella', position: 'MID' },
-            { name: 'Barcola', position: 'FWD' },
-        ],
-    },
-    'user-1': {
-        id: 'user-1',
-        username: 'FootballGenius',
-        teamName: 'The Invincibles',
-        avatar: '👑',
-        joinedDate: '2025-06-01',
-        overallRank: 1,
-        gwRank: 5,
-        totalPoints: 452,
-        gwPoints: 68,
-        formation: '3-5-2',
-        starters: [
-            { name: 'Courtois', position: 'GK' },
-            { name: 'Rüdiger', position: 'DEF' },
-            { name: 'Bastoni', position: 'DEF' },
-            { name: 'Upamecano', position: 'DEF' },
-            { name: 'Vinícius Jr.', position: 'MID' },
-            { name: 'Bellingham', position: 'MID', isCaptain: true },
-            { name: 'Musiala', position: 'MID' },
-            { name: 'Wirtz', position: 'MID' },
-            { name: 'Dembélé', position: 'MID' },
-            { name: 'Haaland', position: 'FWD', isViceCaptain: true },
-            { name: 'Kane', position: 'FWD' },
-        ],
-        bench: [
-            { name: 'Maignan', position: 'GK' },
-            { name: 'Van Dijk', position: 'DEF' },
-            { name: 'Saka', position: 'MID' },
-            { name: 'Mbappé', position: 'FWD' },
-        ],
-    },
-    'user-2': {
-        id: 'user-2',
-        username: 'TacticMaster',
-        teamName: 'Dream Team FC',
-        avatar: '🥈',
-        joinedDate: '2025-07-10',
-        overallRank: 2,
-        gwRank: 12,
-        totalPoints: 438,
-        gwPoints: 45,
-        formation: '4-4-2',
-        starters: [
-            { name: 'Alisson', position: 'GK' },
-            { name: 'Alexander-Arnold', position: 'DEF' },
-            { name: 'Saliba', position: 'DEF' },
-            { name: 'Bastoni', position: 'DEF' },
-            { name: 'Hakimi', position: 'DEF' },
-            { name: 'Saka', position: 'MID', isViceCaptain: true },
-            { name: 'Palmer', position: 'MID' },
-            { name: 'Barella', position: 'MID' },
-            { name: 'Musiala', position: 'MID' },
-            { name: 'Haaland', position: 'FWD', isCaptain: true },
-            { name: 'Martínez', position: 'FWD' },
-        ],
-        bench: [
-            { name: 'Neuer', position: 'GK' },
-            { name: 'Rüdiger', position: 'DEF' },
-            { name: 'Wirtz', position: 'MID' },
-            { name: 'Barcola', position: 'FWD' },
-        ],
-    },
-};
+import { useSquad } from '@/contexts/SquadContext';
+import { usePlayers } from '@/contexts/PlayersContext';
+import { useUserProfile } from '@/contexts/UserProfileContext';
+import { PlayerCardPhoto } from '@/components/PlayerCardPhoto';
+import styles from './page.module.css';
 
 export default function PublicProfilePage({ params }: { params: Promise<{ userId: string }> }) {
     const { userId } = use(params);
-    const user = mockUsers[userId];
+    const { squad, formation } = useSquad();
+    const { profile } = useUserProfile();
+    const { players: allPlayers } = usePlayers();
 
-    if (!user) {
+    // Helper to get player photo from PlayersContext (has enriched photo data)
+    const getPlayerPhoto = (playerId: string) => {
+        const contextPlayer = allPlayers.find(p => p.id === playerId);
+        return contextPlayer?.photo;
+    };
+
+    // For now, we only support viewing the current user's profile
+    const isCurrentUser = userId === 'current-user' || userId === profile.id;
+
+    if (!isCurrentUser) {
         return (
             <div className={styles.container}>
                 <Link href="/dashboard/leaderboard" className={styles.backBtn}>
                     ← Back to Leaderboard
                 </Link>
-                <div className={styles.section}>
-                    <p style={{ textAlign: 'center', padding: '2rem' }}>User not found</p>
+                <div className={styles.notFound}>
+                    <span className={styles.notFoundIcon}>🔍</span>
+                    <p>User not found</p>
                 </div>
             </div>
         );
     }
 
-    const [def, mid, fwd] = user.formation.split('-').map(Number);
+    // Get actual squad data from context
+    const starters = squad.filter(p => p.isStarter);
+    const bench = squad.filter(p => !p.isStarter);
+    const captain = squad.find(p => p.isCaptain);
+    const viceCaptain = squad.find(p => p.isViceCaptain);
 
-    const gk = user.starters.filter(p => p.position === 'GK');
-    const defenders = user.starters.filter(p => p.position === 'DEF');
-    const midfielders = user.starters.filter(p => p.position === 'MID');
-    const forwards = user.starters.filter(p => p.position === 'FWD');
+    // Group starters by position
+    const gk = starters.filter(p => p.position === 'GK');
+    const defenders = starters.filter(p => p.position === 'DEF');
+    const midfielders = starters.filter(p => p.position === 'MID');
+    const forwards = starters.filter(p => p.position === 'FWD');
 
     return (
         <div className={styles.container}>
@@ -144,111 +55,162 @@ export default function PublicProfilePage({ params }: { params: Promise<{ userId
                 ← Back to Leaderboard
             </Link>
 
-            {/* Public Profile Header */}
-            <section className={styles.publicHeader}>
-                <div className={styles.publicAvatar}>{user.avatar}</div>
-                <h1 className={styles.publicUsername}>{user.username}</h1>
-                <span className={styles.publicTeamName}>{user.teamName}</span>
-                <span className={styles.publicJoined}>
-                    Member since {new Date(user.joinedDate).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-                </span>
-            </section>
+            {/* Profile Card */}
+            <div className={styles.profileCard}>
+                {/* Header */}
+                <div className={styles.publicProfileHeader}>
+                    <div className={styles.publicProfileAvatar}>
+                        {profile.avatarUrl ? (
+                            <img
+                                src={profile.avatarUrl}
+                                alt={profile.username}
+                                className={styles.publicProfileImage}
+                            />
+                        ) : (
+                            <span className={styles.publicProfileEmoji}>⚽</span>
+                        )}
+                    </div>
+                    <div className={styles.publicProfileInfo}>
+                        <h1 className={styles.publicProfileName}>{profile.username}</h1>
+                        <span className={styles.publicProfileTeam}>{profile.teamName}</span>
+                        <span className={styles.publicProfileMeta}>
+                            Member since {new Date(profile.joinedDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                        </span>
+                    </div>
+                </div>
 
-            {/* Stats Cards */}
-            <section className={styles.statsGrid}>
-                <div className={styles.statCard}>
-                    <span className={styles.statValue}>#{user.overallRank}</span>
-                    <span className={styles.statLabel}>Overall Rank</span>
+                {/* Stats Row */}
+                <div className={styles.publicStatsRow}>
+                    <div className={styles.publicStat}>
+                        <span className={styles.publicStatValue}>#{profile.overallRank}</span>
+                        <span className={styles.publicStatLabel}>Rank</span>
+                    </div>
+                    <div className={styles.publicStatDivider}></div>
+                    <div className={styles.publicStat}>
+                        <span className={styles.publicStatValue}>{profile.totalPoints}</span>
+                        <span className={styles.publicStatLabel}>Points</span>
+                    </div>
+                    <div className={styles.publicStatDivider}></div>
+                    <div className={styles.publicStat}>
+                        <span className={styles.publicStatValue}>{profile.gwPoints}</span>
+                        <span className={styles.publicStatLabel}>GW</span>
+                    </div>
                 </div>
-                <div className={styles.statCard}>
-                    <span className={styles.statValue}>{user.totalPoints}</span>
-                    <span className={styles.statLabel}>Total Points</span>
-                </div>
-                <div className={styles.statCard}>
-                    <span className={styles.statValue}>#{user.gwRank}</span>
-                    <span className={styles.statLabel}>GW Rank</span>
-                </div>
-                <div className={styles.statCard}>
-                    <span className={styles.statValue}>{user.gwPoints}</span>
-                    <span className={styles.statLabel}>GW Points</span>
-                </div>
-            </section>
+            </div>
 
-            {/* Team Section */}
-            <section className={styles.section}>
-                <h2 className={styles.sectionTitle}>
-                    {user.teamName} • {user.formation}
+            {/* Squad Section */}
+            <div className={styles.squadSection}>
+                <h2 className={styles.squadTitle}>
+                    <span className={styles.squadTitleIcon}>⚽</span>
+                    {profile.teamName}
+                    <span className={styles.squadFormation}>{formation}</span>
                 </h2>
 
-                {/* Pitch Display */}
-                <div className={styles.pitchDisplay}>
-                    {/* Forwards */}
-                    <div className={styles.pitchRow}>
-                        {forwards.map((player, i) => (
-                            <div key={i} className={styles.pitchPlayer}>
-                                <div className={`${styles.pitchShirt} ${styles.fwd}`}>
-                                    {player.name.substring(0, 3).toUpperCase()}
-                                    {player.isCaptain && <span className={styles.pitchCaptainBadge}>C</span>}
-                                    {player.isViceCaptain && <span className={styles.pitchCaptainBadge}>V</span>}
-                                </div>
-                                <span className={styles.pitchName}>{player.name}</span>
-                            </div>
-                        ))}
+                {starters.length === 0 ? (
+                    <div className={styles.emptySquad}>
+                        <span className={styles.emptySquadIcon}>📋</span>
+                        <p>No players in squad yet</p>
                     </div>
-
-                    {/* Midfielders */}
-                    <div className={styles.pitchRow}>
-                        {midfielders.map((player, i) => (
-                            <div key={i} className={styles.pitchPlayer}>
-                                <div className={`${styles.pitchShirt} ${styles.mid}`}>
-                                    {player.name.substring(0, 3).toUpperCase()}
-                                    {player.isCaptain && <span className={styles.pitchCaptainBadge}>C</span>}
-                                    {player.isViceCaptain && <span className={styles.pitchCaptainBadge}>V</span>}
-                                </div>
-                                <span className={styles.pitchName}>{player.name}</span>
+                ) : (
+                    <>
+                        {/* Pitch Display */}
+                        <div className={styles.pitch}>
+                            {/* Forwards */}
+                            <div className={styles.pitchLine}>
+                                {forwards.map((player) => (
+                                    <div key={player.id} className={styles.playerCard}>
+                                        <div className={`${styles.playerShirt} ${styles.fwdShirt}`}>
+                                            <PlayerCardPhoto
+                                                playerName={player.name}
+                                                existingPhoto={player.photo || getPlayerPhoto(player.id)}
+                                                className={styles.playerImage}
+                                            />
+                                            {captain?.id === player.id && <span className={styles.captainBadge}>C</span>}
+                                            {viceCaptain?.id === player.id && <span className={styles.captainBadge}>V</span>}
+                                        </div>
+                                        <span className={styles.playerName}>{player.name.split(' ').pop()}</span>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
 
-                    {/* Defenders */}
-                    <div className={styles.pitchRow}>
-                        {defenders.map((player, i) => (
-                            <div key={i} className={styles.pitchPlayer}>
-                                <div className={`${styles.pitchShirt} ${styles.def}`}>
-                                    {player.name.substring(0, 3).toUpperCase()}
-                                    {player.isCaptain && <span className={styles.pitchCaptainBadge}>C</span>}
-                                    {player.isViceCaptain && <span className={styles.pitchCaptainBadge}>V</span>}
-                                </div>
-                                <span className={styles.pitchName}>{player.name}</span>
+                            {/* Midfielders */}
+                            <div className={styles.pitchLine}>
+                                {midfielders.map((player) => (
+                                    <div key={player.id} className={styles.playerCard}>
+                                        <div className={`${styles.playerShirt} ${styles.midShirt}`}>
+                                            <PlayerCardPhoto
+                                                playerName={player.name}
+                                                existingPhoto={player.photo || getPlayerPhoto(player.id)}
+                                                className={styles.playerImage}
+                                            />
+                                            {captain?.id === player.id && <span className={styles.captainBadge}>C</span>}
+                                            {viceCaptain?.id === player.id && <span className={styles.captainBadge}>V</span>}
+                                        </div>
+                                        <span className={styles.playerName}>{player.name.split(' ').pop()}</span>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
 
-                    {/* Goalkeeper */}
-                    <div className={styles.pitchRow}>
-                        {gk.map((player, i) => (
-                            <div key={i} className={styles.pitchPlayer}>
-                                <div className={`${styles.pitchShirt} ${styles.gk}`}>
-                                    {player.name.substring(0, 3).toUpperCase()}
-                                </div>
-                                <span className={styles.pitchName}>{player.name}</span>
+                            {/* Defenders */}
+                            <div className={styles.pitchLine}>
+                                {defenders.map((player) => (
+                                    <div key={player.id} className={styles.playerCard}>
+                                        <div className={`${styles.playerShirt} ${styles.defShirt}`}>
+                                            <PlayerCardPhoto
+                                                playerName={player.name}
+                                                existingPhoto={player.photo || getPlayerPhoto(player.id)}
+                                                className={styles.playerImage}
+                                            />
+                                            {captain?.id === player.id && <span className={styles.captainBadge}>C</span>}
+                                            {viceCaptain?.id === player.id && <span className={styles.captainBadge}>V</span>}
+                                        </div>
+                                        <span className={styles.playerName}>{player.name.split(' ').pop()}</span>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
-                </div>
 
-                {/* Bench */}
-                <div className={styles.benchDisplay}>
-                    {user.bench.map((player, i) => (
-                        <div key={i} className={styles.benchPlayer}>
-                            <div className={`${styles.benchShirt} ${styles[player.position.toLowerCase()]}`}>
-                                {player.name.substring(0, 2).toUpperCase()}
+                            {/* Goalkeeper */}
+                            <div className={styles.pitchLine}>
+                                {gk.map((player) => (
+                                    <div key={player.id} className={styles.playerCard}>
+                                        <div className={`${styles.playerShirt} ${styles.gkShirt}`}>
+                                            <PlayerCardPhoto
+                                                playerName={player.name}
+                                                existingPhoto={player.photo || getPlayerPhoto(player.id)}
+                                                className={styles.playerImage}
+                                            />
+                                            {captain?.id === player.id && <span className={styles.captainBadge}>C</span>}
+                                            {viceCaptain?.id === player.id && <span className={styles.captainBadge}>V</span>}
+                                        </div>
+                                        <span className={styles.playerName}>{player.name.split(' ').pop()}</span>
+                                    </div>
+                                ))}
                             </div>
-                            <span className={styles.benchName}>{player.name.split(' ').pop()}</span>
                         </div>
-                    ))}
-                </div>
-            </section>
+
+                        {/* Bench */}
+                        {bench.length > 0 && (
+                            <div className={styles.benchSection}>
+                                <span className={styles.benchLabel}>Substitutes</span>
+                                <div className={styles.benchRow}>
+                                    {bench.map((player) => (
+                                        <div key={player.id} className={styles.benchCard}>
+                                            <div className={`${styles.benchShirtSmall} ${styles[`${player.position.toLowerCase()}Shirt`]}`}>
+                                                <PlayerCardPhoto
+                                                    playerName={player.name}
+                                                    existingPhoto={player.photo || getPlayerPhoto(player.id)}
+                                                    className={styles.benchImage}
+                                                />
+                                            </div>
+                                            <span className={styles.benchNameSmall}>{player.name.split(' ').pop()}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
         </div>
     );
 }

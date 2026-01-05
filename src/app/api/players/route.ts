@@ -12,7 +12,8 @@ interface UnifiedPlayer {
     league: 'PL' | 'LL' | 'SA' | 'BL' | 'FL1';
     position: 'GK' | 'DEF' | 'MID' | 'FWD';
     price: number;
-    points: number;
+    points: number; // Total season points
+    eventPoints?: number; // Current gameweek points (PL only)
     goals: number;
     assists: number;
     cleanSheets: number;
@@ -23,7 +24,8 @@ interface UnifiedPlayer {
     xA?: number;
     form?: number;
     isLive?: boolean; // true if from FPL API
-    image?: string;
+    status?: string; // a=available, d=doubtful, i=injured, etc.
+    photo?: string; // Player photo URL
 }
 
 /**
@@ -44,7 +46,7 @@ export async function GET(request: Request) {
         const { searchParams } = new URL(request.url);
         const league = searchParams.get('league') as UnifiedPlayer['league'] | null;
         const position = searchParams.get('position') as UnifiedPlayer['position'] | null;
-        const limit = parseInt(searchParams.get('limit') || '100');
+        const limit = parseInt(searchParams.get('limit') || '2500'); // Default to all players
         const sort = searchParams.get('sort') || 'points';
         const source = searchParams.get('source') || 'auto';
 
@@ -66,6 +68,7 @@ export async function GET(request: Request) {
                         position: p.position,
                         price: p.price,
                         points: p.points,
+                        eventPoints: p.eventPoints, // Current gameweek points
                         goals: p.goals,
                         assists: p.assists,
                         cleanSheets: p.cleanSheets,
@@ -76,7 +79,8 @@ export async function GET(request: Request) {
                         xA: p.xA,
                         form: p.form,
                         isLive: true,
-                        image: p.image,
+                        status: p.status,
+                        photo: p.photo, // Include photo URL
                     }));
 
                     players.push(...normalizedFPL);
@@ -86,7 +90,7 @@ export async function GET(request: Request) {
                 console.error('FPL API error, falling back to curated:', error);
                 // Fall back to curated PL data
                 const curatedPL = PLAYER_DATABASE.filter(p => p.league === 'PL');
-                players.push(...curatedPL.map(p => ({ ...p, isLive: false })));
+                players.push(...curatedPL.map(p => ({ ...p, isLive: false, status: 'a' })));
                 curatedCount += curatedPL.length;
             }
         }
@@ -99,7 +103,7 @@ export async function GET(request: Request) {
 
             for (const lg of curatedLeagues) {
                 const leaguePlayers = PLAYER_DATABASE.filter(p => p.league === lg);
-                players.push(...leaguePlayers.map(p => ({ ...p, isLive: false })));
+                players.push(...leaguePlayers.map(p => ({ ...p, isLive: false, status: 'a' })));
                 curatedCount += leaguePlayers.length;
             }
 

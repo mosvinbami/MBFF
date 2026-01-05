@@ -5,160 +5,224 @@ import Link from 'next/link';
 import { useSquad, LeagueCode } from '@/contexts/SquadContext';
 import styles from './page.module.css';
 
+const leagueNames: Record<LeagueCode, string> = {
+    PL: 'Premier League',
+    LL: 'La Liga',
+    SA: 'Serie A',
+    BL: 'Bundesliga',
+    FL1: 'Ligue 1',
+};
+
+interface NewsItem {
+    title: string;
+    source: string;
+    league?: string;
+}
+
 export default function DashboardPage() {
     const { budgetRemaining, squad, getLeagueCount } = useSquad();
-    const [rulesOpen, setRulesOpen] = useState(false);
+    const [showTips, setShowTips] = useState(true); // Expanded by default
+    const [countdown, setCountdown] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
+    const [news, setNews] = useState<NewsItem[]>([]);
 
-    // Mock Countdown Logic
-    const [timeLeft, setTimeLeft] = useState({ d: 2, h: 14, m: 52 });
-
+    // Calculate next Sunday 12:00 UTC deadline
     useEffect(() => {
-        // Simple mock timer decrement
-        const timer = setInterval(() => {
-            setTimeLeft(prev => {
-                if (prev.m > 0) return { ...prev, m: prev.m - 1 };
-                if (prev.h > 0) return { ...prev, h: prev.h - 1, m: 59 };
-                if (prev.d > 0) return { ...prev, d: prev.d - 1, h: 23, m: 59 };
-                return prev;
-            });
-        }, 60000);
-        return () => clearInterval(timer);
+        const getNextSunday = () => {
+            const now = new Date();
+            const sunday = new Date(now);
+            sunday.setUTCHours(12, 0, 0, 0);
+            const daysUntilSunday = (7 - now.getUTCDay()) % 7;
+            sunday.setDate(now.getDate() + (daysUntilSunday === 0 && now.getTime() > sunday.getTime() ? 7 : daysUntilSunday));
+            return sunday;
+        };
+
+        const updateCountdown = () => {
+            const deadline = getNextSunday();
+            const now = new Date();
+            const diff = deadline.getTime() - now.getTime();
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+                setCountdown({ days, hours, mins, secs });
+            }
+        };
+
+        updateCountdown();
+        const interval = setInterval(updateCountdown, 1000);
+        return () => clearInterval(interval);
     }, []);
 
-    // Guidance Logic
-    const getGuidanceMessage = () => {
-        if (squad.length < 15) return `Select ${15 - squad.length} more players to complete squad`;
-        if (getLeagueCount('PL') === 0) return "You need at least 1 Premier League player";
-        if (getLeagueCount('LL') === 0) return "You need at least 1 La Liga player";
-        if (getLeagueCount('SA') === 0) return "You need at least 1 Serie A player";
-        if (getLeagueCount('BL') === 0) return "You need at least 1 Bundesliga player";
-        if (getLeagueCount('FL1') === 0) return "You need at least 1 Ligue 1 player";
-        return "Your squad is ready! Set your lineup.";
-    };
+    // Fetch live sports news
+    useEffect(() => {
+        const fetchNews = async () => {
+            try {
+                const response = await fetch('/api/news?limit=8');
+                const data = await response.json();
+                if (data.success && data.news) {
+                    setNews(data.news);
+                }
+            } catch (error) {
+                console.error('Error fetching news:', error);
+            }
+        };
 
-    const guidance = getGuidanceMessage();
-    const isSquadComplete = squad.length === 15;
+        fetchNews();
+        // Refresh news every 10 minutes
+        const interval = setInterval(fetchNews, 10 * 60 * 1000);
+        return () => clearInterval(interval);
+    }, []);
+
+    // Find missing leagues
+    const missingLeagues = (['PL', 'LL', 'SA', 'BL', 'FL1'] as LeagueCode[])
+        .filter(league => getLeagueCount(league) < 1);
+
+    const startersCount = squad.filter(p => p.isStarter).length;
 
     return (
         <div className={styles.dashboard}>
-            {/* Deadline Card */}
-            <section className={styles.deadlineCard}>
-                <div className={styles.deadlineHeader}>
-                    <span className={styles.deadlineLabel}>Next Deadline: <span className={styles.deadlineDate}>Sunday, 12:00 PM</span></span>
+            {/* Deadline Banner */}
+            <section className={styles.deadlineBanner}>
+                <div className={styles.deadlineInfo}>
+                    <span className={styles.deadlineLabel}>Next Deadline:</span>
+                    <span className={styles.deadlineTime}>Sunday, 12:00 PM</span>
                 </div>
-                <div className={styles.deadlineContent}>
-                    <div className={styles.countdownBox}>
-                        <span>{timeLeft.d}D</span>
-                        <span>{timeLeft.h}H</span>
-                        <span>{timeLeft.m}M</span>
-                        <span>17s</span>
+                <div className={styles.deadlineRow}>
+                    <div className={styles.countdown}>
+                        <span className={styles.countdownValue}>{countdown.days}D</span>
+                        <span className={styles.countdownValue}>{countdown.hours}H</span>
+                        <span className={styles.countdownValue}>{countdown.mins}M</span>
+                        <span className={styles.countdownValue}>{countdown.secs}s</span>
                     </div>
-                    <Link href="/dashboard/lineup" className={styles.setLineupBtn}>
+                    <Link href="/dashboard/squad?tab=pick" className={styles.deadlineBtn}>
                         Set Lineup
                     </Link>
                 </div>
             </section>
 
-            {/* Hero Budget Card */}
-            <section className={styles.heroCard}>
-                <div className={styles.heroContent}>
-                    <div className={styles.budgetGroup}>
-                        <span className={styles.heroLabel}>AVAILABLE BUDGET</span>
-                        <div className={styles.heroValue}>€{budgetRemaining.toFixed(1)}M</div>
-                    </div>
-                    <div className={styles.playerCountBadge}>
-                        <span className={styles.pcValue}>{squad.length}/15</span>
-                        <span className={styles.pcLabel}>PLAYERS</span>
+            {/* News Ticker - Live Sports News */}
+            <section className={styles.newsTicker}>
+                <span className={styles.newsIcon}>📰</span>
+                <div className={styles.newsTrack}>
+                    <div className={styles.newsScroll}>
+                        {news.length > 0 ? (
+                            <>
+                                {news.map((item, index) => (
+                                    <>
+                                        <span key={index} className={styles.newsItem}>
+                                            {item.title}
+                                        </span>
+                                        <span className={styles.newsDivider}>•</span>
+                                    </>
+                                ))}
+                                {/* Duplicate for seamless loop */}
+                                {news.map((item, index) => (
+                                    <>
+                                        <span key={`dup-${index}`} className={styles.newsItem}>
+                                            {item.title}
+                                        </span>
+                                        <span className={styles.newsDivider}>•</span>
+                                    </>
+                                ))}
+                            </>
+                        ) : (
+                            <>
+                                <span className={styles.newsItem}>
+                                    ⚽ Loading latest football news...
+                                </span>
+                                <span className={styles.newsDivider}>•</span>
+                                <span className={styles.newsItem}>
+                                    🔥 Stay tuned for updates from all 5 leagues
+                                </span>
+                                <span className={styles.newsDivider}>•</span>
+                            </>
+                        )}
                     </div>
                 </div>
-                {/* Abstract Swish Background */}
-                <div className={styles.heroBackground} />
             </section>
 
-            {/* Action Grid */}
-            <section className={styles.actions}>
-                <Link href="/dashboard/squad" className={styles.actionTile}>
-                    <div className={`${styles.iconBox} ${styles.iconBlue}`}>👥</div>
-                    <div className={styles.actionMeta}>
-                        <span className={styles.actionTitle}>Build Squad</span>
-                        <span className={styles.actionHint}>Select 15 players · {squad.length}/15</span>
-                    </div>
-                    <div className={styles.tileGlow} />
-                </Link>
-
-                <Link href="/dashboard/lineup" className={styles.actionTile}>
-                    <div className={`${styles.iconBox} ${styles.iconOrange}`}>📋</div>
-                    <div className={styles.actionMeta}>
-                        <span className={styles.actionTitle}>Set Lineup</span>
-                        <span className={styles.actionHint}>Pick starting 11</span>
-                    </div>
-                    <div className={styles.tileGlow} />
-                </Link>
-
-                <Link href="/dashboard/players" className={styles.actionTile}>
-                    <div className={`${styles.iconBox} ${styles.iconYellow}`}>⚡</div>
-                    <div className={styles.actionMeta}>
-                        <span className={styles.actionTitle}>Players</span>
-                        <span className={styles.actionHint}>Browse all players</span>
-                    </div>
-                    <div className={styles.tileGlow} />
-                </Link>
-
-                <Link href="/dashboard/leaderboard" className={styles.actionTile}>
-                    <div className={`${styles.iconBox} ${styles.iconGold}`}>🏆</div>
-                    <div className={styles.actionMeta}>
-                        <span className={styles.actionTitle}>Leaderboard</span>
-                        <span className={styles.actionHint}>View rankings</span>
-                    </div>
-                    <div className={styles.tileGlow} />
-                </Link>
+            {/* Budget Card */}
+            <section className={styles.budgetCard}>
+                <div className={styles.budgetInfo}>
+                    <span className={styles.budgetLabel}>AVAILABLE BUDGET</span>
+                    <span className={styles.budgetValue}>€{budgetRemaining.toFixed(1)}M</span>
+                </div>
+                <div className={styles.squadStatus}>
+                    <span className={styles.squadCount}>{squad.length}/15</span>
+                    <span className={styles.squadLabel}>PLAYERS</span>
+                </div>
             </section>
 
-            {/* Guidance Banner */}
-            <div className={styles.guidanceBanner}>
-                <div className={styles.shieldIcon}>!</div>
-                <span className={styles.guidanceText}>{guidance}</span>
-                <span className={styles.guidanceArrow}>›</span>
+            {/* Quick Actions - 2x2 Grid */}
+            <div className={styles.actionsGrid}>
+                <Link href="/dashboard/squad?tab=transfers" className={styles.actionCard}>
+                    <div className={styles.actionIconWrapper}>
+                        <span className={styles.actionIcon}>👥</span>
+                    </div>
+                    <span className={styles.actionTitle}>Build Squad</span>
+                    <span className={styles.actionDesc}>Select 15 players · {squad.length}/15</span>
+                </Link>
+
+                <Link href="/dashboard/squad?tab=pick" className={styles.actionCard}>
+                    <div className={styles.actionIconWrapper}>
+                        <span className={styles.actionIcon}>📋</span>
+                    </div>
+                    <span className={styles.actionTitle}>Set Lineup</span>
+                    <span className={styles.actionDesc}>Pick starting 11</span>
+                </Link>
+
+                <Link href="/dashboard/players" className={styles.actionCard}>
+                    <div className={styles.actionIconWrapper}>
+                        <span className={styles.actionIcon}>⚡</span>
+                    </div>
+                    <span className={styles.actionTitle}>Players</span>
+                    <span className={styles.actionDesc}>Browse all players</span>
+                </Link>
+
+                <Link href="/dashboard/leaderboard" className={styles.actionCard}>
+                    <div className={styles.actionIconWrapper}>
+                        <span className={styles.actionIcon}>🏆</span>
+                    </div>
+                    <span className={styles.actionTitle}>Leaderboard</span>
+                    <span className={styles.actionDesc}>View rankings</span>
+                </Link>
             </div>
 
-            {/* League Strip */}
-            <section className={styles.leagueStrip}>
-                {['PL', 'LL', 'SA', 'BL', 'FL1'].map((code) => {
-                    const count = getLeagueCount(code as LeagueCode);
-                    const isMet = count > 0;
-                    return (
-                        <div key={code} className={`${styles.leagueBadge} ${isMet ? styles.met : ''}`}>
-                            <span className={styles.lbCode}>{code === 'FL1' ? 'L1' : code}</span>
-                            <div className={styles.lbStatus}>
-                                {isMet ? <span className={styles.dotMet} /> : <span className={styles.dotMiss} />}
-                            </div>
-                        </div>
-                    );
-                })}
-            </section>
+            {/* Missing League Alert */}
+            {missingLeagues.length > 0 && (
+                <Link href="/dashboard/players" className={styles.alertBanner}>
+                    <div className={styles.alertIcon}>⚠️</div>
+                    <span className={styles.alertText}>
+                        You still need a <strong className={styles.alertHighlight}>{leagueNames[missingLeagues[0]]}</strong> player
+                    </span>
+                    <span className={styles.alertArrow}>›</span>
+                </Link>
+            )}
 
-            {/* Collapsible Rules */}
-            <section className={styles.rulesSection}>
+            {/* How It Works - Collapsible */}
+            <section className={styles.tipsSection}>
                 <button
-                    className={styles.rulesToggle}
-                    onClick={() => setRulesOpen(!rulesOpen)}
+                    className={styles.tipsHeader}
+                    onClick={() => setShowTips(!showTips)}
                 >
-                    <span>How It Works</span>
-                    <span className={`${styles.chevron} ${rulesOpen ? styles.open : ''}`}>▼</span>
+                    <h2 className={styles.tipsTitle}>How It Works</h2>
+                    <span className={`${styles.tipsToggle} ${showTips ? styles.open : ''}`}>⌄</span>
                 </button>
 
-                {rulesOpen && (
-                    <div className={styles.rulesContent}>
-                        <div className={styles.ruleItem}>
-                            <span className={styles.ruleNum}>1</span>
+                {showTips && (
+                    <div className={styles.tipsList}>
+                        <div className={styles.tipItem}>
+                            <span className={styles.tipNumber}>1</span>
                             <p>Build a 15-player squad within €100M budget</p>
                         </div>
-                        <div className={styles.ruleItem}>
-                            <span className={styles.ruleNum}>2</span>
+                        <div className={styles.tipItem}>
+                            <span className={styles.tipNumber}>2</span>
                             <p>Set your 11-player lineup before Sunday 12:00 UTC</p>
                         </div>
-                        <div className={styles.ruleItem}>
-                            <span className={styles.ruleNum}>3</span>
+                        <div className={styles.tipItem}>
+                            <span className={styles.tipNumber}>3</span>
                             <p>Earn points from all competitive matches</p>
                         </div>
                     </div>
