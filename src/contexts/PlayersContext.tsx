@@ -79,76 +79,109 @@ export function PlayersProvider({ children }: { children: React.ReactNode }) {
         setError(null);
 
         try {
-            const response = await fetch('/api/players?limit=2500'); // Get ALL players
-            const data = await response.json();
+            // 1. Try to fetch the Universal Database (synced from TheSportsDB)
+            const universalRes = await fetch('/api/players/universal');
+            const universalData = await universalRes.json();
 
-            if (data.success) {
-                // API players are Premier League from FPL
-                const apiPlayers: NormalizedPlayer[] = data.players || [];
+            let allPlayers: NormalizedPlayer[] = [];
 
-                // Create a Map to dedupe by ID
-                const playerMap = new Map<string, NormalizedPlayer>();
-
-                // Add API players first (these are live PL data)
-                apiPlayers.forEach(p => {
-                    playerMap.set(p.id, p);
-                });
-
-                // Add static players (these fill in other leagues)
-                staticPlayers.forEach(p => {
-                    // Only add if not already in map (prevents duplicates)
-                    if (!playerMap.has(p.id)) {
-                        playerMap.set(p.id, p);
-                    }
-                });
-
-                // Fetch live points for all leagues
-                const leagues: Array<'PL' | 'LL' | 'SA' | 'BL' | 'FL1'> = ['PL', 'LL', 'SA', 'BL', 'FL1'];
-                const livePointsPromises = leagues.map(async (league) => {
-                    try {
-                        const res = await fetch(`/api/live-points?league=${league}`);
-                        const liveData = await res.json();
-                        return { league, players: liveData.players || [] };
-                    } catch {
-                        return { league, players: [] };
-                    }
-                });
-
-                const livePointsResults = await Promise.all(livePointsPromises);
-
-                // Create a lookup map for live points by player name (lowercase for matching)
-                const livePointsLookup = new Map<string, number>();
-                for (const result of livePointsResults) {
-                    for (const livePlayer of result.players) {
-                        const key = livePlayer.playerName.toLowerCase();
-                        // Add to existing points if player has multiple matches (shouldn't happen usually)
-                        const existing = livePointsLookup.get(key) || 0;
-                        livePointsLookup.set(key, existing + livePlayer.eventPoints);
-                    }
-                }
-
-                // Merge live points into player data
-                const allPlayers = Array.from(playerMap.values()).map(player => {
-                    const livePoints = livePointsLookup.get(player.name.toLowerCase());
-                    if (livePoints !== undefined) {
-                        return { ...player, eventPoints: livePoints };
-                    }
-                    // Keep existing eventPoints if already set (e.g., from FPL)
-                    return player;
-                });
-
-                setPlayers(allPlayers);
-                setLastUpdated(data.lastUpdated);
+            if (universalData.success && universalData.players.length > 0) {
+                // Map universal DB players to Context format
+                allPlayers = universalData.players.map((p: any) => ({
+                    id: p.id,
+                    name: p.name,
+                    team: p.team,
+                    league: p.league,
+                    position: p.position,
+                    price: p.price || 5.0,
+                    points: p.points || 0,
+                    goals: 0,
+                    assists: 0,
+                    cleanSheets: 0,
+                    yellowCards: 0,
+                    redCards: 0,
+                    minutesPlayed: 0,
+                    xG: 0,
+                    xA: 0,
+                    photo: p.image || undefined, // Use TSDB cutout
+                }));
             } else {
-                // If API fails, still show static players
-                setPlayers(staticPlayers);
-                throw new Error(data.error || 'Failed to fetch players');
+                // Fallback to static lists if universal DB is empty/missing
+                console.warn('Universal DB missing, using static fallback');
+                allPlayers = staticPlayers;
             }
+
+            // 2. Fetch Live FPL Data (better stats for PL)
+            try {
+                const fplRes = await fetch('/api/players?limit=1000');
+                const fplData = await fplRes.json();
+
+                if (fplData.success) {
+                    const fplMap = new Map(fplData.players.map((p: any) => [p.name.toLowerCase(), p]));
+
+                    // Merge FPL stats into our universal players (matching by name)
+                    allPlayers = allPlayers.map(p => {
+                        if (p.league === 'PL') {
+                            const fplP = fplMap.get(p.name.toLowerCase());
+                            if (fplP) {
+                                return {
+                                    ...p,
+                                    // Use FPL stats which are real and live
+                                    points: fplP.points,
+                                    goals: fplP.goals,
+                                    assists: fplP.assists,
+                                    cleanSheets: fplP.cleanSheets,
+                                    price: fplP.price,
+                                    eventPoints: fplP.eventPoints,
+                                    photo: fplP.photo || p.photo // Prefer FPL photo if standard
+                                };
+                            }
+                        }
+                        return p;
+                    });
+                }
+            } catch (err) {
+                console.warn('FPL fetch failed', err);
+            }
+
+            // 3. Fetch Python Live Points (for match events across all leagues if available)
+            // This endpoint (api/live-points) connects to our python scrapers
+            const leagues: Array<'PL' | 'LL' | 'SA' | 'BL' | 'FL1'> = ['PL', 'LL', 'SA', 'BL', 'FL1'];
+            const livePointsPromises = leagues.map(async (league) => {
+                try {
+                    const res = await fetch(`/api/live-points?league=${league}`);
+                    const liveData = await res.json();
+                    return { league, players: liveData.players || [] };
+                } catch {
+                    return { league, players: [] };
+                }
+            });
+
+            const livePointsResults = await Promise.all(livePointsPromises);
+            const livePointsLookup = new Map<string, number>();
+
+            livePointsResults.forEach(result => {
+                result.players.forEach((lp: any) => {
+                    livePointsLookup.set(lp.playerName.toLowerCase(), lp.eventPoints);
+                });
+            });
+
+            // Merge live match points
+            allPlayers = allPlayers.map(p => {
+                const live = livePointsLookup.get(p.name.toLowerCase());
+                if (live !== undefined) {
+                    return { ...p, eventPoints: live };
+                }
+                return p;
+            });
+
+            setPlayers(allPlayers);
+            setLastUpdated(new Date().toISOString());
+
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to load players');
             console.error('Error loading players:', err);
-            // Ensure static players are available even on error
-            setPlayers(staticPlayers);
+            setPlayers(staticPlayers); // Hard fallback
         } finally {
             setLoading(false);
         }
