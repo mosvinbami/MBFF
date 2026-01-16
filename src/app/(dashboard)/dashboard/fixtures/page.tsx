@@ -68,32 +68,15 @@ export default function FixturesPage() {
             setError(null);
 
             try {
-                let apiUrl = '';
-
-                if (isCup(selectedCompetition)) {
-                    // Cup competitions via TheSportsDB
-                    apiUrl = `/api/fixtures-thesportsdb?league=${selectedCompetition}`;
-                } else if (selectedCompetition === 'PL') {
-                    apiUrl = '/api/fixtures';
-                } else if (selectedCompetition === 'BL') {
-                    apiUrl = '/api/fixtures-bundesliga';
-                } else if (['LL', 'SA', 'FL1'].includes(selectedCompetition)) {
-                    // La Liga, Serie A, Ligue 1 via TheSportsDB
-                    apiUrl = `/api/fixtures-thesportsdb?league=${selectedCompetition}`;
-                } else {
-                    setFixtures([]);
-                    setLoading(false);
-                    return;
-                }
-
-                const response = await fetch(apiUrl);
+                // Use our new Python-powered Unified API for ALL leagues
+                // This ensures real-time FotMob data for PL, La Liga, Bundesliga, Serie A, Ligue 1
+                const response = await fetch(`/api/fixtures-unified?league=${selectedCompetition}`);
                 const data = await response.json();
 
                 if (data.success) {
                     setFixtures(data.fixtures);
                     const live = data.fixtures?.filter((f: Fixture) => f.status === 'live').length || 0;
                     setLiveCount(live);
-                    // Keep default filter (results) - don't auto-switch
                 } else {
                     setError(data.error || 'Failed to load fixtures');
                 }

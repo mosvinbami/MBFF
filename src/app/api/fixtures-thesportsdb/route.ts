@@ -6,6 +6,8 @@ import { NextResponse } from 'next/server';
 // League IDs in TheSportsDB
 const LEAGUE_IDS: Record<string, number> = {
     // Top 5 Leagues
+    'PL': 4328,   // English Premier League
+    'BL': 4331,   // German Bundesliga
     'LL': 4335,   // Spanish La Liga
     'SA': 4332,   // Italian Serie A
     'FL1': 4334,  // French Ligue 1
@@ -21,6 +23,8 @@ const LEAGUE_IDS: Record<string, number> = {
 };
 
 const LEAGUE_NAMES: Record<string, string> = {
+    'PL': 'Premier League',
+    'BL': 'Bundesliga',
     'LL': 'La Liga',
     'SA': 'Serie A',
     'FL1': 'Ligue 1',
@@ -34,8 +38,10 @@ const LEAGUE_NAMES: Record<string, string> = {
     'COUPEFR': 'Coupe de France',
 };
 
-// Current round estimates for leagues (Jan 2026)
+// Current round estimates for leagues (Jan 2026) -> Adjusted dynamically in logic
 const CURRENT_ROUNDS: Record<string, number> = {
+    'PL': 21,
+    'BL': 17,
     'LL': 20,
     'SA': 20,
     'FL1': 18,
