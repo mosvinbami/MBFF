@@ -120,7 +120,7 @@ function normalizeEvent(event: TheSportsDBEvent, leagueCode: string): Normalized
 async function fetchLeagueFixtures(leagueId: number, leagueCode: string, season: string) {
     const currentRound = CURRENT_ROUNDS[leagueCode] || 20;
     const roundsToFetch = [];
-    for (let r = Math.max(1, currentRound - 3); r <= currentRound + 2; r++) {
+    for (let r = Math.max(1, currentRound - 5); r <= currentRound + 5; r++) {
         roundsToFetch.push(r);
     }
 

@@ -77,6 +77,20 @@ export default function FixturesPage() {
                     setFixtures(data.fixtures);
                     const live = data.fixtures?.filter((f: Fixture) => f.status === 'live').length || 0;
                     setLiveCount(live);
+
+                    // Auto-select filter to show most relevant matches
+                    if (live > 0) {
+                        setActiveFilter('live');
+                    } else {
+                        // If we have upcoming games in next 7 days, show them. Else fallback to results.
+                        // This ensures user sees "What's next" primarily.
+                        const hasUpcoming = data.fixtures?.some((f: Fixture) => f.status === 'upcoming');
+                        if (hasUpcoming) {
+                            setActiveFilter('upcoming');
+                        } else {
+                            setActiveFilter('results');
+                        }
+                    }
                 } else {
                     setError(data.error || 'Failed to load fixtures');
                 }
