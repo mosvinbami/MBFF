@@ -80,36 +80,67 @@ export function PlayersProvider({ children }: { children: React.ReactNode }) {
 
         try {
             // 1. Try to fetch the Universal Database (synced from TheSportsDB)
-            const universalRes = await fetch('/api/players/universal');
-            const universalData = await universalRes.json();
+            let universalPlayers: NormalizedPlayer[] = [];
+            try {
+                const universalRes = await fetch('/api/players/universal');
+                const universalData = await universalRes.json();
 
-            let allPlayers: NormalizedPlayer[] = [];
-
-            if (universalData.success && universalData.players.length > 0) {
-                // Map universal DB players to Context format
-                allPlayers = universalData.players.map((p: any) => ({
-                    id: p.id,
-                    name: p.name,
-                    team: p.team,
-                    league: p.league,
-                    position: p.position,
-                    price: p.price || 5.0,
-                    points: p.points || 0,
-                    goals: 0,
-                    assists: 0,
-                    cleanSheets: 0,
-                    yellowCards: 0,
-                    redCards: 0,
-                    minutesPlayed: 0,
-                    xG: 0,
-                    xA: 0,
-                    photo: p.image || undefined, // Use TSDB cutout
-                }));
-            } else {
-                // Fallback to static lists if universal DB is empty/missing
-                console.warn('Universal DB missing, using static fallback');
-                allPlayers = staticPlayers;
+                if (universalData.success && universalData.players.length > 0) {
+                    universalPlayers = universalData.players.map((p: any) => ({
+                        id: p.id,
+                        name: p.name,
+                        team: p.team,
+                        league: p.league,
+                        position: p.position,
+                        price: p.price || 5.0,
+                        points: p.points || 0,
+                        goals: 0,
+                        assists: 0,
+                        cleanSheets: 0,
+                        yellowCards: 0,
+                        redCards: 0,
+                        minutesPlayed: 0,
+                        xG: 0,
+                        xA: 0,
+                        photo: p.image || undefined,
+                    }));
+                }
+            } catch (e) {
+                console.warn('Universal DB fetch failed', e);
             }
+
+            // 2. Merge Static Players (to fill gaps)
+            // Create a Map of Universal Players for fast lookup
+            // Key: "team:normalized_name", Value: Player
+            const universalMap = new Map<string, NormalizedPlayer>();
+            const normalize = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
+
+            universalPlayers.forEach(p => {
+                universalMap.set(`${normalize(p.team)}:${normalize(p.name)}`, p);
+            });
+
+            const mergedPlayers = [...universalPlayers];
+
+            staticPlayers.forEach(sp => {
+                // Check if this static player already exists in the synced data
+                // We check strict match on ID first (unlikely match) or fuzzy name match
+                const key = `${normalize(sp.team)}:${normalize(sp.name)}`;
+
+                if (!universalMap.has(key)) {
+                    // Not found in sync, add from static to ensure full squad
+                    mergedPlayers.push(sp);
+                } else {
+                    // Player exists in Sync.
+                    // We might want to "enrich" the sync player with static stats (points/price) if the sync one is empty?
+                    const synced = universalMap.get(key)!;
+                    if (synced.points === 0 && sp.points > 0) {
+                        synced.points = sp.points;
+                        synced.price = sp.price; // Trust static price if sync is default 5.0
+                    }
+                }
+            });
+
+            let allPlayers = mergedPlayers;
 
             // 2. Fetch Live FPL Data (better stats for PL)
             try {
@@ -117,7 +148,7 @@ export function PlayersProvider({ children }: { children: React.ReactNode }) {
                 const fplData = await fplRes.json();
 
                 if (fplData.success) {
-                    const fplMap = new Map(fplData.players.map((p: any) => [p.name.toLowerCase(), p]));
+                    const fplMap = new Map<string, any>(fplData.players.map((p: any) => [p.name.toLowerCase(), p]));
 
                     // Merge FPL stats into our universal players (matching by name)
                     allPlayers = allPlayers.map(p => {
