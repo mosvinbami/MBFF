@@ -71,8 +71,16 @@ function PlayersPageContent() {
     // Filter and sort players
     const filteredPlayers = players
         .filter(p => {
-            if (search && !p.name.toLowerCase().includes(search.toLowerCase()) &&
-                !p.team.toLowerCase().includes(search.toLowerCase())) return false;
+            // Handle club filter explicitly (stored in search as 'club:TeamName')
+            if (search.startsWith('club:')) {
+                const clubName = search.split(':')[1];
+                if (p.team !== clubName) return false;
+            } else if (search) {
+                // Normal search
+                if (!p.name.toLowerCase().includes(search.toLowerCase()) &&
+                    !p.team.toLowerCase().includes(search.toLowerCase())) return false;
+            }
+
             if (positionFilter !== 'ALL' && p.position !== positionFilter) return false;
             if (leagueFilter !== 'ALL' && p.league !== leagueFilter) return false;
             return true;
@@ -197,6 +205,33 @@ function PlayersPageContent() {
                     </div>
                 </div>
 
+                {/* Club Filter Dropdown */}
+                <div className={styles.filterGroup} style={{ marginTop: '10px' }}>
+                    <select
+                        className={styles.clubSelect}
+                        value={search.startsWith('club:') ? search.split(':')[1] : ''}
+                        onChange={(e) => setSearch(e.target.value ? `club:${e.target.value}` : '')}
+                        style={{
+                            padding: '8px 12px',
+                            background: 'rgba(255,255,255,0.05)',
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            borderRadius: '8px',
+                            color: '#fff',
+                            width: '100%',
+                            outline: 'none'
+                        }}
+                    >
+                        <option value="">All Clubs</option>
+                        {Array.from(new Set(players
+                            .filter(p => leagueFilter === 'ALL' || p.league === leagueFilter)
+                            .map(p => p.team)
+                            .sort()
+                        )).map(team => (
+                            <option key={team} value={team}>{team}</option>
+                        ))}
+                    </select>
+                </div>
+
                 <div className={styles.filterRow}>
                     <div className={styles.leagueTabs}>
                         {leagues.map(lg => (
@@ -204,7 +239,13 @@ function PlayersPageContent() {
                                 key={lg}
                                 className={`${styles.leagueTab} ${leagueFilter === lg ? styles.active : ''}`}
                                 data-league={lg.toLowerCase()}
-                                onClick={() => setLeagueFilter(lg)}
+                                onClick={() => {
+                                    setLeagueFilter(lg);
+                                    // Clear specific club search if switching leagues
+                                    if (search.startsWith('club:')) {
+                                        setSearch('');
+                                    }
+                                }}
                             >
                                 {lg}
                             </button>
@@ -230,63 +271,67 @@ function PlayersPageContent() {
 
             {/* Player List */}
             <div className={styles.playerList}>
-                {filteredPlayers.map(player => {
-                    const inSquad = squadIds.has(player.id);
-                    const playerForSquad: Player = {
-                        id: player.id,
-                        name: player.name,
-                        team: player.team,
-                        league: player.league as LeagueCode,
-                        position: player.position as PlayerPosition,
-                        price: player.price,
-                        points: player.points,
-                    };
-                    const check = canAddPlayer(playerForSquad);
-                    const canAdd = check.allowed && !inSquad;
+                {filteredPlayers
+                    // Additional filter for Club Dropdown logic (using 'club:TeamName' in search state)
+                    // We hijack 'search' state to store club filter to keep it simple or implement specific state.
+                    // Let's assume 'search' handles it if we modify the filter function below.
+                    .map(player => {
+                        const inSquad = squadIds.has(player.id);
+                        const playerForSquad: Player = {
+                            id: player.id,
+                            name: player.name,
+                            team: player.team,
+                            league: player.league as LeagueCode,
+                            position: player.position as PlayerPosition,
+                            price: player.price,
+                            points: player.points,
+                        };
+                        const check = canAddPlayer(playerForSquad);
+                        const canAdd = check.allowed && !inSquad;
 
-                    return (
-                        <Link
-                            key={player.id}
-                            href={`/dashboard/player/${player.id}`}
-                            className={`${styles.playerCard} ${inSquad ? styles.inSquad : ''}`}
-                        >
-                            <div className={styles.playerPhoto}>
-                                <PlayerCardPhoto
-                                    playerName={player.name}
-                                    existingPhoto={(player as any).photo}
-                                />
-                            </div>
-                            <div className={styles.playerInfo}>
-                                <span className={styles.playerName}>{player.name}</span>
-                                <span className={styles.playerTeam}>{player.team}</span>
-                            </div>
-                            <div className={styles.playerMeta}>
-                                <span className={`${styles.badge} ${styles[player.position.toLowerCase()]}`}>
-                                    {player.position}
-                                </span>
-                                <span className={`${styles.leagueBadge} ${styles[player.league.toLowerCase()]}`}>
-                                    {player.league}
-                                </span>
-                            </div>
-                            <div className={styles.playerStats}>
-                                <span className={styles.statPoints}>{player.points}</span>
-                                <span className={styles.statPrice}>€{player.price}M</span>
-                            </div>
-                            {inSquad ? (
-                                <span className={styles.inSquadBadge}>✓</span>
-                            ) : (
-                                <button
-                                    className={`${styles.addBtn} ${!canAdd ? styles.disabled : ''}`}
-                                    onClick={(e) => canAdd && handleAddPlayer(e, playerForSquad)}
-                                    disabled={!canAdd}
-                                    title={!canAdd ? check.reason : 'Add to squad'}
-                                >
-                                    +
-                                </button>
-                            )}
-                        </Link>
-                    );
-                })}
+                        return (
+                            <Link
+                                key={player.id}
+                                href={`/dashboard/player/${player.id}`}
+                                className={`${styles.playerCard} ${inSquad ? styles.inSquad : ''}`}
+                            >
+                                <div className={styles.playerPhoto}>
+                                    <PlayerCardPhoto
+                                        playerName={player.name}
+                                        existingPhoto={(player as any).photo}
+                                    />
+                                </div>
+                                <div className={styles.playerInfo}>
+                                    <span className={styles.playerName}>{player.name}</span>
+                                    <span className={styles.playerTeam}>{player.team}</span>
+                                </div>
+                                <div className={styles.playerMeta}>
+                                    <span className={`${styles.badge} ${styles[player.position.toLowerCase()]}`}>
+                                        {player.position}
+                                    </span>
+                                    <span className={`${styles.leagueBadge} ${styles[player.league.toLowerCase()]}`}>
+                                        {player.league}
+                                    </span>
+                                </div>
+                                <div className={styles.playerStats}>
+                                    <span className={styles.statPoints}>{player.points}</span>
+                                    <span className={styles.statPrice}>€{player.price}M</span>
+                                </div>
+                                {inSquad ? (
+                                    <span className={styles.inSquadBadge}>✓</span>
+                                ) : (
+                                    <button
+                                        className={`${styles.addBtn} ${!canAdd ? styles.disabled : ''}`}
+                                        onClick={(e) => canAdd && handleAddPlayer(e, playerForSquad)}
+                                        disabled={!canAdd}
+                                        title={!canAdd ? check.reason : 'Add to squad'}
+                                    >
+                                        +
+                                    </button>
+                                )}
+                            </Link>
+                        );
+                    })}
             </div>
 
             {filteredPlayers.length === 0 && !loading && (
