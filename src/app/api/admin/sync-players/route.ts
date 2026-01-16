@@ -55,11 +55,40 @@ export async function GET(request: Request) {
         console.log(`Starting sync for ${clubsToProcess.length} clubs...`);
 
         for (const club of clubsToProcess) {
-            // Use club.name for search, but handle potential TSDB naming mismatches?
-            // TSDB usually likes "Arsenal", "Aston Villa", etc.
-            // Our clubs.ts names are pretty good.
-            const encodedName = encodeURIComponent(club.name);
-            const url = `https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?t=${encodedName}`;
+            let teamId = '';
+
+            // Step 1: Get Team ID
+            try {
+                // Clean name for better search matching (remove FC, CF, etc)
+                // e.g. "Sevilla FC" -> "Sevilla"
+                const cleanName = club.name
+                    .replace(/\s(FC|CF|UD|CD|RCD|RC|AFC|SC|BSC|TSG|VfL|VfB|1\. FSV|1\. FC)\b/g, '')
+                    .replace(/\b(FC|CF|UD|CD|RCD|RC|AFC|SC|BSC|TSG|VfL|VfB|1\. FSV|1\. FC)\s/g, '')
+                    .trim();
+
+                const searchUrl = `https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t=${encodeURIComponent(cleanName)}`;
+                const searchRes = await fetch(searchUrl);
+                const searchData = await searchRes.json();
+
+                if (searchData.teams && searchData.teams.length > 0) {
+                    // Find exact match or best match? The first one is usually best.
+                    // But verify league? 
+                    // Let's just take the first one, usually safer than nothing.
+                    teamId = searchData.teams[0].idTeam;
+                } else {
+                    // Try shortName? or common alternatives
+                    console.warn(`Could not find team ID for ${club.name}`);
+                    errors.push(`${club.name} (No ID)`);
+                    continue;
+                }
+            } catch (e) {
+                console.error(`Error searching team ${club.name}`, e);
+                errors.push(`${club.name} (Search Error)`);
+                continue;
+            }
+
+            // Step 2: Fetch Players by ID
+            const url = `https://www.thesportsdb.com/api/v1/json/3/lookup_all_players.php?id=${teamId}`;
 
             try {
                 const res = await fetch(url);
@@ -69,28 +98,27 @@ export async function GET(request: Request) {
                     const teamPlayers = data.player.map((p: any) => ({
                         id: p.idPlayer,
                         name: p.strPlayer,
-                        team: club.name, // Use our normalized club name
+                        team: club.name, // Force strict club name from OUR db
                         teamId: club.id,
                         league: club.league,
                         position: normalizePosition(p.strPosition),
-                        price: 5.0, // Placeholder price
-                        points: 0, // Placeholder points
+                        price: 5.0,
+                        points: 0,
                         image: p.strCutout || p.strThumb || null,
                         nationality: p.strNationality,
                         number: p.strNumber
                     }));
                     allPlayers.push(...teamPlayers);
                 } else {
-                    console.warn(`No players found for ${club.name}`);
-                    errors.push(club.name);
+                    console.warn(`No players found for ${club.name} (ID: ${teamId})`);
+                    errors.push(`${club.name} (No Players)`);
                 }
             } catch (err) {
-                console.error(`Failed to fetch ${club.name}`, err);
-                errors.push(`${club.name} (Error)`);
+                console.error(`Failed to fetch players for ${club.name}`, err);
+                errors.push(`${club.name} (Fetch Error)`);
             }
 
-            // Be nice to the API
-            await new Promise(r => setTimeout(r, 200));
+            await new Promise(r => setTimeout(r, 100)); // Rate limit
         }
 
         // Save to file if we did a full sync or partial?
